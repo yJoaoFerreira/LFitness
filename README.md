@@ -1,4 +1,4 @@
 # App Academia
 
-- Um aplicativo de academia feito em react-native para a disciplina de Desenvolvimento Mobile em Análise e Desenvolvimento de Sistemas (ADS).
+- Um aplicativo de academia para a disciplina de Desenvolvimento Mobile em Análise e Desenvolvimento de Sistemas (ADS).
 - Professor: Lucas Floriano
