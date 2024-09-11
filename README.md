@@ -4,5 +4,5 @@
 - Professor: Lucas Floriano
 - Linguagem: React-Native
 
-- Sinopse: Um aplicativo de academia para um personal trainer e seus alunos.
+- Sinopse: Um aplicativo mobile de academia para um personal trainer e seus alunos compatível para Android e IOS.
 - Progresso:
