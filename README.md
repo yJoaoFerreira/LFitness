@@ -5,4 +5,4 @@
 - Linguagem: React-Native
 
 - Sinopse: Um aplicativo mobile de academia para um personal trainer e seus alunos compatível para Android e IOS. O intuito do aplicativo é entregar um resultado utilizável no dia a dia que não comprometa ou prejudique a rotina do personal.
-- Progresso:
+- Progresso: 0%
