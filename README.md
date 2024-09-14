@@ -4,5 +4,5 @@
 - Professor: Lucas Floriano
 - Linguagem: React-Native
 
-- Sinopse: Um aplicativo mobile de academia para um personal trainer e seus alunos compatível para Android e IOS. O intuito do aplicativo é entregar um resultado utilizável no dia a dia que não comprometa ou prejudique a rotina do personal. O App vai contar com cinco páginas, sendo elas: Home Page (Página inicial), Aluno, Treino em Casa, Consultoria Online e Avaliação Física respectivamente.
+- Sinopse: Um aplicativo mobile de academia para um personal trainer e seus alunos compatível para Android e IOS. O intuito do aplicativo é entregar um resultado utilizável no dia a dia que não comprometa ou prejudique a rotina do personal. O App vai contar com cinco páginas, sendo elas: Home Page (Página inicial), Aluno (Página exclusiva dos alunos, necessário fazer login), Treino em Casa, Consultoria Online e Avaliação Física respectivamente.
 - Progresso: 0%
