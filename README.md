@@ -1,6 +1,6 @@
 # App Academia (Personal Trainer)
 
-- Um app para um Personal Trainer para a disciplina de Desenvolvimento Mobile em Análise e Desenvolvimento de Sistemas (ADS).
+- Um app para um Personal Trainer para a disciplina de "Desenvolvimento Mobile em React-Native" em Análise e Desenvolvimento de Sistemas (ADS).
 - Professor: Lucas Floriano
 - Linguagem: React-Native
 - Equipe: João Gonçalves, Fernando Ribeiro e Lucas Silva
