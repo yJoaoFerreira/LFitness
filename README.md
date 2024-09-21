@@ -1,4 +1,4 @@
-# App Academia (Personal Trainer)
+# App LFitness (Personal Trainer)
 
 - Um app para um Personal Trainer para a disciplina de "Desenvolvimento Mobile em React-Native" em Análise e Desenvolvimento de Sistemas (ADS).
 - Professor: Lucas Floriano.
