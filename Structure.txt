@@ -1,0 +1,36 @@
+/project-LFitness
+│
+├── /assets              # Todos os arquivos estáticos (imagens, fontes, etc.)
+│   ├── /images          # Pasta de imagens do app
+│   └── /fonts           # Fontes personalizadas
+│
+├── /src                 # Código-fonte da aplicação
+│   ├── /components      # Componentes reutilizáveis da interface
+│   │   └── CustomButton.js
+│   │   └── Header.js
+│   ├── /screens         # Telas principais do app
+│   │   ├── HomeScreen.js
+│   │   ├── LoginScreen.js
+│   │   ├── ProfileScreen.js
+│   │   └── SettingsScreen.js
+│   ├── /navigation      # Configurações de navegação (Stack, Tab, Drawer)
+│   │   ├── AppNavigator.js
+│   │   └── AuthNavigator.js
+│   ├── /services        # Serviços de API ou funções relacionadas ao backend
+│   │   └── api.js
+│   ├── /context         # Estado global ou providers de contexto (Context API, Redux, etc.)
+│   │   └── AuthContext.js
+│   ├── /styles          # Arquivos de estilos (CSS-in-JS, ou arquivos separados)
+│   │   ├── colors.js    # Paleta de cores do projeto
+│   │   └── globalStyles.js  # Estilos globais que podem ser reutilizados
+│   └── /utils           # Funções auxiliares ou utilitárias
+│       └── helpers.js
+│
+├── /backend             # Pasta separada para código backend (Node.js, Firebase, etc.)
+│   ├── /controllers     # Controladores de backend
+│   └── /models          # Modelos de banco de dados (MongoDB, Sequelize, etc.)
+│
+├── App.js               # Arquivo principal da aplicação
+├── package.json         # Dependências e scripts do projeto
+├── .gitignore           # Arquivos e pastas ignoradas pelo Git
+└── README.md            # Documentação básica do projeto
