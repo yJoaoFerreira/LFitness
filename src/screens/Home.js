@@ -1,11 +1,10 @@
-import { Image, ScrollView } from 'react-native';
+import { Image, View } from 'react-native';
+import Header from '../components/Header';
 
-const Home = () => {
+export default function Home() {
   return (
-    <ScrollView>
-      <Image source={require('.../assets/images/logo.png')}/>
-    </ScrollView>
+    <View>
+      <Header/>
+    </View>
   );
-};
-
-export default Home;
+}
