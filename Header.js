@@ -4,15 +4,15 @@ import { Ionicons } from '@expo/vector-icons'; // Importa ícones
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import Home from './Home'; // Certifique-se de que o caminho está correto
 
 const Drawer = createDrawerNavigator();
 
 function DrawerContent() {
   return (
     <Drawer.Navigator initialRouteName="Home">
-      {/* Adicione suas telas aqui */}
       <Drawer.Screen name="Home" component={Home} />
-      {/* Outras telas podem ser adicionadas aqui */}
+      {/* Adicione outras telas conforme necessário */}
     </Drawer.Navigator>
   );
 }
@@ -33,6 +33,7 @@ export default function Header({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%', // Ocupa toda a largura da tela
     backgroundColor: '#fff',
   },
   header: {
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingTop: 40, // Este valor pode ser ajustado conforme necessário
     height: 80,
     backgroundColor: '#f8f8f8',
     borderBottomWidth: 1,
