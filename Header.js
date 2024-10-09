@@ -1,11 +1,30 @@
-import { StyleSheet, Text, View } from "react-native";
+import 'react-native-gesture-handler';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { Ionicons } from '@expo/vector-icons'; // Importa ícones
+import * as React from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function Header() {
+const Drawer = createDrawerNavigator();
+
+function DrawerContent() {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      {/* Adicione suas telas aqui */}
+      <Drawer.Screen name="Home" component={Home} />
+      {/* Outras telas podem ser adicionadas aqui */}
+    </Drawer.Navigator>
+  );
+}
+
+export default function Header({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.menuText}>Menu de Nav</Text>
-        <Text style={styles.logoText}>Logotipo</Text>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Ionicons name="menu" size={32} color="black" />
+        </TouchableOpacity>
+        <Image source={require('./assets/logo.png')} style={styles.logo} />
         <Text style={styles.themeText}>Contraste</Text>
       </View>
     </View>
@@ -14,28 +33,22 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Preenche toda a tela
     backgroundColor: '#fff',
   },
   header: {
-    flexDirection: 'row', // Organiza os elementos na horizontal
-    justifyContent: 'space-between', // Distribui o espaço entre os itens
-    alignItems: 'center', // Alinha os itens verticalmente
-    paddingHorizontal: 20, // Adiciona um espaçamento lateral
-    paddingTop: 40, // Adiciona um espaçamento no topo
-    height: 80, // Define a altura do cabeçalho
-    backgroundColor: '#f8f8f8', // Cor de fundo do cabeçalho
-    borderBottomWidth: 1, // Linha na parte inferior do cabeçalho
-    borderBottomColor: '#ddd', // Cor da linha inferior
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    height: 80,
+    backgroundColor: '#f8f8f8',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
-  menuText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  logoText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center', // Centraliza o texto (no espaço disponível para ele)
+  logo: {
+    width: 50,
+    height: 50,
   },
   themeText: {
     fontSize: 18,

@@ -1,30 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
-import Header from "./header";
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Home from './Home';
 
-export default function Home() {
+export default function App() {
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        <Text style={styles.text}>Oláaa</Text>
-      </View>
-    </View>
+    <NavigationContainer>
+      <Home/> {/* Renderize apenas o Home, que terá o Drawer integrado */}
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, // Preenche a tela toda
-    backgroundColor: "#fff",
-  },
-  content: {
-    flex: 1, // Preenche o espaço restante abaixo do cabeçalho
-    justifyContent: "center", // Centraliza o conteúdo verticalmente
-    alignItems: "center", // Centraliza o conteúdo horizontalmente
-    padding: 20,
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-});
