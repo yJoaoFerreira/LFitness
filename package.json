@@ -1,4 +1,6 @@
 {
+  "name": "lfitness",
+  "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -11,8 +13,9 @@
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-native": "0.74.5",
-    "react-native-paper": "4.9.2",
-    "@expo/vector-icons": "^14.0.3"
+    "react-native-web": "~0.19.10",
+    "react-dom": "18.2.0",
+    "@expo/metro-runtime": "~3.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
