@@ -1,10 +1,11 @@
+// HomeTraining.js
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function Home() {
+export default function HomeTraining() {
   return (
     <View>
-      <Text>Bem-vindo à tela Home!</Text>
+      <Text>Treino em Casa</Text>
     </View>
   );
 }
