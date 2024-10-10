@@ -1,11 +1,20 @@
-// HomeTraining.js
 import React from 'react';
-import { View, Text } from 'react-native';
+import { useWindowDimensions } from 'react-native';
+import RenderHtml from 'react-native-render-html';
 
-export default function HomeTraining() {
+export default function Student() {
+  const source = {
+    html: `
+    <p style="text-align:center;">Alunos</p>
+    `
+  };
+
+  const { width } = useWindowDimensions();
+
   return (
-    <View>
-      <Text>Alunos</Text>
-    </View>
+    <RenderHtml
+      contentWidth={width}
+      source={source}
+    />
   );
 }

@@ -18,7 +18,7 @@ export default function App() {
       <Drawer.Navigator
         initialRouteName="Home"
         screenOptions={{
-          header: ({ navigation }) => <Header navigation={navigation} />, // Usa o Header em todas as telas
+          header: ({ navigation }) => <Header navigation={navigation} />,
         }}
       >
         <Drawer.Screen name="Home" component={Home} />
