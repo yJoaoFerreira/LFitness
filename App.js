@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from './Home';
@@ -13,15 +13,29 @@ import Student from './Student';
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+  const [isHighContrast, setIsHighContrast] = useState(false);
+
+  const toggleTheme = () => {
+    setIsHighContrast((prev) => !prev);
+  };
+
   return (
     <NavigationContainer>
       <Drawer.Navigator
         initialRouteName="Home"
         screenOptions={{
-          header: ({ navigation }) => <Header navigation={navigation} />,
+          header: ({ navigation }) => (
+            <Header 
+              navigation={navigation} 
+              onToggleTheme={toggleTheme} 
+              isHighContrast={isHighContrast} 
+            />
+          ),
         }}
       >
-        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="Home">
+          {(props) => <Home {...props} isHighContrast={isHighContrast} />}
+        </Drawer.Screen>
         <Drawer.Screen name="Student" component={Student} options={{ title: 'Alunos' }} />
         <Drawer.Screen name="PhysicalAssessment" component={PhysicalAssessment} options={{ title: 'Avaliação Física' }} />
         <Drawer.Screen name="OnlineConsulting" component={OnlineConsulting} options={{ title: 'Consulta Online' }} />
