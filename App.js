@@ -1,10 +1,8 @@
-import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Home from './Home';
 import Header from './Header';
-
+import Home from './Home';
 import HomeTraining from './HomeTraining'; 
 import OnlineConsulting from './OnlineConsulting';
 import PhysicalAssessment from './PhysicalAssessment';
@@ -16,7 +14,7 @@ export default function App() {
   const [isHighContrast, setIsHighContrast] = useState(false);
 
   const toggleTheme = () => {
-    setIsHighContrast((prev) => !prev);
+    setIsHighContrast(!isHighContrast);
   };
 
   return (
@@ -25,21 +23,29 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{
           header: ({ navigation }) => (
-            <Header 
-              navigation={navigation} 
-              onToggleTheme={toggleTheme} 
-              isHighContrast={isHighContrast} 
+            <Header
+              navigation={navigation}
+              onToggleTheme={toggleTheme}
+              isHighContrast={isHighContrast}
             />
           ),
         }}
       >
         <Drawer.Screen name="Home">
-          {(props) => <Home {...props} isHighContrast={isHighContrast} />}
+          {() => <Home isHighContrast={isHighContrast} />}
         </Drawer.Screen>
-        <Drawer.Screen name="Student" component={Student} options={{ title: 'Alunos' }} />
-        <Drawer.Screen name="PhysicalAssessment" component={PhysicalAssessment} options={{ title: 'Avaliação Física' }} />
-        <Drawer.Screen name="OnlineConsulting" component={OnlineConsulting} options={{ title: 'Consulta Online' }} />
-        <Drawer.Screen name="HomeTraining" component={HomeTraining} options={{ title: 'Treino em Casa' }} />
+        <Drawer.Screen name="Aluno">
+          {() => <Student isHighContrast={isHighContrast} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Avaliação Física">
+          {() => <PhysicalAssessment isHighContrast={isHighContrast} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Consultoria Online">
+          {() => <OnlineConsulting isHighContrast={isHighContrast} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Treino em Casa">
+          {() => <HomeTraining isHighContrast={isHighContrast} />}
+        </Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
   );

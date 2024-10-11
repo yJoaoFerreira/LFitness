@@ -5,7 +5,7 @@ export default function Home({ isHighContrast }) {
   return (
     <ScrollView 
       contentContainerStyle={styles.container} 
-      style={[styles.scrollView, isHighContrast ? styles.highContrastBackground : null]} // Aplicando o estilo condicional
+      style={[styles.scrollView, isHighContrast ? styles.highContrastBackground : null]}
     >
       <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>QUEM É A LFITNESS?</Text>
       
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   scrollView: {
-    backgroundColor: '#fff', // Cor de fundo padrão
+    backgroundColor: '#fff',
   },
   highContrastBackground: {
-    backgroundColor: '#000', // Cor de fundo em alto contraste
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 32,

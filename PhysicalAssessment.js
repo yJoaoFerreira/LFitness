@@ -1,20 +1,32 @@
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
-import RenderHtml from 'react-native-render-html';
+import { Text, View, StyleSheet } from 'react-native';
 
-export default function PhysicalAssessment() {
-  const source = {
-    html: `
-    <p style="text-align:center;">Gostaria de saber suas medidas corporais?</p>
-    `
-  };
-
-  const { width } = useWindowDimensions();
-
+export default function PhysicalAssessment({ isHighContrast }) {
   return (
-    <RenderHtml
-      contentWidth={width}
-      source={source}
-    />
+    <View style={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
+      <Text style={[styles.paragraph, isHighContrast && styles.paragraphHighContrast]}>
+        Gostaria de saber suas medidas corporais?
+      </Text>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  highContrastBackground: {
+    backgroundColor: '#000',
+  },
+  paragraph: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#34495e',
+  },
+  paragraphHighContrast: {
+    color: '#ddd',
+  },
+});
