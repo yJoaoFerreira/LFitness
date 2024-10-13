@@ -1,15 +1,24 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 
-export default function HomeTraining({ isHighContrast }) {
+export default function Student({ isHighContrast }) {
+  const whatsappNumber = '5511999999999';
+  const message = 'Olá, gostaria de mais informações!';
+
+  const handleWhatsAppPress = () => {
+    const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+    Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
+  };
+
   return (
     <View style={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
-      <Text style={[styles.heading, isHighContrast && styles.headingHighContrast]}>
+      <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>
         Treino em Casa
       </Text>
-      <Text style={[styles.paragraph, isHighContrast && styles.paragraphHighContrast]}>
-        Não está com tempo para ir à academia? Podemos treinar em casa!
-      </Text>
+
+      <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
+        <Text style={styles.buttonText}>Enviar Mensagem no WhatsApp</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -24,22 +33,22 @@ const styles = StyleSheet.create({
   highContrastBackground: {
     backgroundColor: '#000',
   },
-  heading: {
+  title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#2c3e50',
-    marginBottom: 10,
-  },
-  headingHighContrast: {
-    color: '#fff',
-  },
-  paragraph: {
-    fontSize: 16,
     textAlign: 'center',
     color: '#34495e',
   },
-  paragraphHighContrast: {
+  titleHighContrast: {
     color: '#ddd',
+  },
+  button: {
+    marginTop: 20,
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: '#25D366',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
   },
 });

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Student({ isHighContrast }) {
+  const navigation = useNavigation();
   const whatsappNumber = '5511999999999';
   const message = 'Olá, gostaria de mais informações!';
 
@@ -10,11 +12,19 @@ export default function Student({ isHighContrast }) {
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
   };
 
+  const goToPhysicalAssessment = () => {
+    navigation.navigate('Avaliação Física');
+  };
+
   return (
     <View style={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
       <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>
         Alunos
       </Text>
+
+      <TouchableOpacity style={styles.button} onPress={goToPhysicalAssessment}>
+        <Text style={styles.buttonText}>Ir para Avaliação Física</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
         <Text style={styles.buttonText}>Enviar Mensagem no WhatsApp</Text>
