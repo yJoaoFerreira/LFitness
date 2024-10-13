@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Importar ícone
 
+// Transformar em teste unitário
 export default function Student({ isHighContrast }) {
   const navigation = useNavigation();
   const whatsappNumber = '5511999999999';
@@ -27,6 +29,7 @@ export default function Student({ isHighContrast }) {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
+        <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} /> {/* Ícone do WhatsApp */}
         <Text style={styles.buttonText}>Enviar Mensagem no WhatsApp</Text>
       </TouchableOpacity>
     </View>
@@ -56,9 +59,12 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     backgroundColor: '#25D366',
+    flexDirection: 'row', // Para alinhar o ícone e o texto
+    alignItems: 'center', // Centraliza verticalmente
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
+    marginLeft: 10, // Espaço entre o ícone e o texto
   },
 });

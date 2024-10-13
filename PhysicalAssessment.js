@@ -46,6 +46,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Peso atual (kg):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Peso atual (kg)"
           value={form.peso}
           onChangeText={(value) => handleChange('peso', value)}
           keyboardType="numeric"
@@ -56,6 +57,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Altura (cm):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Altura (cm)"
           value={form.altura}
           onChangeText={(value) => handleChange('altura', value)}
           keyboardType="numeric"
@@ -66,6 +68,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>IMC (calculado automaticamente):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="IMC (calculado automaticamente)"
           value={form.imc}
           editable={false}
         />
@@ -75,6 +78,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Circunferência Abdominal (cm):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Circunferência Abdominal (cm)"
           value={form.circAbdominal}
           onChangeText={(value) => handleChange('circAbdominal', value)}
           keyboardType="numeric"
@@ -85,6 +89,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Braço (Esquerdo) (cm):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Braço (Esquerdo) (cm)"
           value={form.bracoEsquerdo}
           onChangeText={(value) => handleChange('bracoEsquerdo', value)}
           keyboardType="numeric"
@@ -95,6 +100,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Braço (Direito) (cm):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Braço (Direito) (cm)"
           value={form.bracoDireito}
           onChangeText={(value) => handleChange('bracoDireito', value)}
           keyboardType="numeric"
@@ -105,6 +111,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Perna (Esquerda) (cm):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Perna (Esquerda) (cm)"
           value={form.pernaEsquerda}
           onChangeText={(value) => handleChange('pernaEsquerda', value)}
           keyboardType="numeric"
@@ -115,6 +122,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Perna (Direita) (cm):</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Perna (Direita) (cm)"
           value={form.pernaDireita}
           onChangeText={(value) => handleChange('pernaDireita', value)}
           keyboardType="numeric"
@@ -125,6 +133,7 @@ export default function PhysicalAssessment({ isHighContrast }) {
         <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Idade Corporal:</Text>
         <TextInput
           style={[styles.input, isHighContrast && styles.inputHighContrast]}
+          placeholder="Idade Corporal"
           value={form.idadeCorporal}
           onChangeText={(value) => handleChange('idadeCorporal', value)}
           keyboardType="numeric"
