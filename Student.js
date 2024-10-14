@@ -29,7 +29,7 @@ export default function Student({ isHighContrast }) {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
-        <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} /> {/* Ícone do WhatsApp */}
+        <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>Enviar Mensagem no WhatsApp</Text>
       </TouchableOpacity>
     </View>
@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     backgroundColor: '#25D366',
-    flexDirection: 'row', // Para alinhar o ícone e o texto
-    alignItems: 'center', // Centraliza verticalmente
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
-    marginLeft: 10, // Espaço entre o ícone e o texto
+    marginLeft: 10,
   },
 });
