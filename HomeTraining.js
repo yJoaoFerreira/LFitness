@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importar ícone
 
 export default function HomeTraining({ isHighContrast }) {
@@ -22,61 +22,86 @@ export default function HomeTraining({ isHighContrast }) {
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
   };
 
+  const data = [
+    {
+      key: 'peso',
+      label: 'Peso (kg):',
+      placeholder: 'Peso (kg)',
+      value: peso,
+      onChangeText: setPeso,
+      type: 'input',
+    },
+    {
+      key: 'altura',
+      label: 'Altura (cm):',
+      placeholder: 'Altura (cm)',
+      value: altura,
+      onChangeText: setAltura,
+      type: 'input',
+    },
+    {
+      key: 'dorArticulacao',
+      label: 'Sente dor nas articulações?',
+      value: dorArticulacao,
+      onValueChange: setDorArticulacao,
+      type: 'switch',
+    },
+    {
+      key: 'hipertenso',
+      label: 'Hipertenso?',
+      value: hipertenso,
+      onValueChange: setHipertenso,
+      type: 'switch',
+    },
+    {
+      key: 'restricao',
+      label: 'Tem alguma restrição?',
+      placeholder: 'Restrições',
+      value: restricao,
+      onChangeText: setRestricao,
+      type: 'input',
+    },
+  ];
+
+  const renderItem = ({ item }) => {
+    if (item.type === 'input') {
+      return (
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>{item.label}</Text>
+          <TextInput
+            style={[styles.input, isHighContrast && styles.inputHighContrast]}
+            placeholder={item.placeholder}
+            keyboardType="numeric"
+            value={item.value}
+            onChangeText={item.onChangeText}
+            placeholderTextColor={isHighContrast ? '#999' : '#888'}
+          />
+        </View>
+      );
+    } else if (item.type === 'switch') {
+      return (
+        <View style={styles.switchContainer}>
+          <Text style={[styles.switchLabel, isHighContrast && styles.labelHighContrast]}>
+            {item.label}
+          </Text>
+          <Switch value={item.value} onValueChange={item.onValueChange} />
+        </View>
+      );
+    }
+  };
+
   return (
     <View style={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
       <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>
-        Treino em Casa
+        Consultoria Online
       </Text>
 
-      {/* Formulário */}
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Peso (kg):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Peso (kg)"
-          keyboardType="numeric"
-          value={peso}
-          onChangeText={setPeso}
-          placeholderTextColor={isHighContrast ? '#999' : '#888'}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Altura (cm):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Altura (cm)"
-          keyboardType="numeric"
-          value={altura}
-          onChangeText={setAltura}
-          placeholderTextColor={isHighContrast ? '#999' : '#888'}
-        />
-      </View>
-
-      <View style={styles.switchContainer}>
-        <Text style={[styles.switchLabel, isHighContrast && styles.labelHighContrast]}>
-          Sente dor nas articulações?
-        </Text>
-        <Switch value={dorArticulacao} onValueChange={setDorArticulacao} />
-      </View>
-
-      <View style={styles.switchContainer}>
-        <Text style={[styles.switchLabel, isHighContrast && styles.labelHighContrast]}>
-          Hipertenso?
-        </Text>
-        <Switch value={hipertenso} onValueChange={setHipertenso} />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Tem alguma restrição?</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Restrições"
-          value={restricao}
-          onChangeText={setRestricao}
-          placeholderTextColor={isHighContrast ? '#999' : '#888'}
-        />
-      </View>
+      {/* FlatList para renderizar o formulário */}
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.key}
+      />
 
       {/* Botão do WhatsApp */}
       <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>

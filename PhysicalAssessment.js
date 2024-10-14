@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, ScrollView, TextInput, StyleSheet, Button, Alert, View } from 'react-native';
+import { Text, TextInput, StyleSheet, Button, Alert, View, FlatList } from 'react-native';
 
 export default function PhysicalAssessment({ isHighContrast }) {
   const [form, setForm] = useState({
@@ -13,6 +13,18 @@ export default function PhysicalAssessment({ isHighContrast }) {
     pernaDireita: '',
     idadeCorporal: '',
   });
+
+  const fields = [
+    { label: 'Peso atual (kg)', name: 'peso', placeholder: 'Peso atual (kg)', keyboardType: 'numeric' },
+    { label: 'Altura (cm)', name: 'altura', placeholder: 'Altura (cm)', keyboardType: 'numeric' },
+    { label: 'IMC (calculado automaticamente)', name: 'imc', placeholder: 'IMC (calculado automaticamente)', editable: false },
+    { label: 'Circunferência Abdominal (cm)', name: 'circAbdominal', placeholder: 'Circunferência Abdominal (cm)', keyboardType: 'numeric' },
+    { label: 'Braço (Esquerdo) (cm)', name: 'bracoEsquerdo', placeholder: 'Braço (Esquerdo) (cm)', keyboardType: 'numeric' },
+    { label: 'Braço (Direito) (cm)', name: 'bracoDireito', placeholder: 'Braço (Direito) (cm)', keyboardType: 'numeric' },
+    { label: 'Perna (Esquerda) (cm)', name: 'pernaEsquerda', placeholder: 'Perna (Esquerda) (cm)', keyboardType: 'numeric' },
+    { label: 'Perna (Direita) (cm)', name: 'pernaDireita', placeholder: 'Perna (Direita) (cm)', keyboardType: 'numeric' },
+    { label: 'Idade Corporal', name: 'idadeCorporal', placeholder: 'Idade Corporal', keyboardType: 'numeric' },
+  ];
 
   useEffect(() => {
     const peso = parseFloat(form.peso);
@@ -36,121 +48,46 @@ export default function PhysicalAssessment({ isHighContrast }) {
     Alert.alert('Formulário Enviado', 'Suas medidas foram salvas com sucesso!');
   };
 
+  const renderItem = ({ item }) => (
+    <View style={styles.inputContainer}>
+      <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>{item.label}:</Text>
+      <TextInput
+        style={[styles.input, isHighContrast && styles.inputHighContrast]}
+        placeholder={item.placeholder}
+        value={form[item.name]}
+        onChangeText={(value) => handleChange(item.name, value)}
+        keyboardType={item.keyboardType}
+        editable={item.editable !== false} // Handle editable field (like IMC)
+      />
+    </View>
+  );
+
   return (
-    <ScrollView contentContainerStyle={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
+    <View style={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
       <Text style={[styles.paragraph, isHighContrast && styles.paragraphHighContrast]}>
         Gostaria de saber suas medidas corporais?
       </Text>
 
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Peso atual (kg):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Peso atual (kg)"
-          value={form.peso}
-          onChangeText={(value) => handleChange('peso', value)}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Altura (cm):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Altura (cm)"
-          value={form.altura}
-          onChangeText={(value) => handleChange('altura', value)}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>IMC (calculado automaticamente):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="IMC (calculado automaticamente)"
-          value={form.imc}
-          editable={false}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Circunferência Abdominal (cm):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Circunferência Abdominal (cm)"
-          value={form.circAbdominal}
-          onChangeText={(value) => handleChange('circAbdominal', value)}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Braço (Esquerdo) (cm):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Braço (Esquerdo) (cm)"
-          value={form.bracoEsquerdo}
-          onChangeText={(value) => handleChange('bracoEsquerdo', value)}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Braço (Direito) (cm):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Braço (Direito) (cm)"
-          value={form.bracoDireito}
-          onChangeText={(value) => handleChange('bracoDireito', value)}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Perna (Esquerda) (cm):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Perna (Esquerda) (cm)"
-          value={form.pernaEsquerda}
-          onChangeText={(value) => handleChange('pernaEsquerda', value)}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Perna (Direita) (cm):</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Perna (Direita) (cm)"
-          value={form.pernaDireita}
-          onChangeText={(value) => handleChange('pernaDireita', value)}
-          keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>Idade Corporal:</Text>
-        <TextInput
-          style={[styles.input, isHighContrast && styles.inputHighContrast]}
-          placeholder="Idade Corporal"
-          value={form.idadeCorporal}
-          onChangeText={(value) => handleChange('idadeCorporal', value)}
-          keyboardType="numeric"
-        />
-      </View>
+      <FlatList
+        data={fields}
+        keyExtractor={(item) => item.name}
+        renderItem={renderItem}
+        contentContainerStyle={styles.listContainer}
+      />
 
       <Button title="Enviar Medidas" onPress={handleSubmit} />
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  listContainer: {
+    paddingBottom: 20,
   },
   highContrastBackground: {
     backgroundColor: '#000',
@@ -159,12 +96,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     color: '#34495e',
+    marginBottom: 20,
   },
   paragraphHighContrast: {
     color: '#ddd',
   },
   inputContainer: {
-    width: '100%',
     marginVertical: 10,
   },
   label: {
