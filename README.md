@@ -1,11 +1,19 @@
 # App LFitness
 
-- Um app para um Personal Trainer para a disciplina de "Desenvolvimento Mobile em React-Native" em Análise e Desenvolvimento de Sistemas (ADS).
-- Professor: Lucas Floriano.
-- Linguagem: React-Native.
-- Equipe: João Gonçalves, Fernando Ribeiro e Lucas Silva.
-- Plataformas: Android e IOS.
+## Descrição
+Um aplicativo para Personal Trainers desenvolvido na disciplina de "Desenvolvimento Mobile em React-Native" do curso de Análise e Desenvolvimento de Sistemas (ADS).
 
-- Sinopse: Um aplicativo mobile de academia para um personal trainer e seus alunos compatível para Android e IOS. O intuito do aplicativo é entregar um resultado utilizável no dia a dia que não comprometa ou prejudique a rotina do personal. O App vai contar com cinco páginas, sendo elas: Home Page (Página inicial), Aluno (Página exclusiva dos alunos, necessário fazer login), Treino em Casa (Página onde a pessoa preenche um formulário e depois o personal retorna uma resposta), Consultoria Online (Página que realiza um agendamento de uma vídeo conferência) e Avaliação Física (Pega as informações corporais da pessoa e faz alguns calculos, como o de IMC por exemplo) respectivamente.
+- **Professor:** Lucas Floriano
+- **Linguagem:** React Native
+- **Equipe:** João Gonçalves, Fernando Ribeiro e Lucas Silva
+- **Plataformas:** Android e iOS
 
-- Progresso Atual: 0%
+## Sinopse
+O LFitness é um aplicativo mobile voltado para academias, destinado a facilitar a interação entre personal trainers e seus alunos. O aplicativo é projetado para ser um suporte no dia a dia, sem comprometer a rotina do personal trainer. 
+
+O app possui cinco páginas principais:
+1. **Home Page:** Página inicial do aplicativo.
+2. **Aluno:** Página exclusiva para os alunos, onde é necessário realizar login.
+3. **Treino em Casa:** Uma página onde o usuário preenche um formulário e o personal trainer retorna com uma resposta personalizada.
+4. **Consultoria Online:** Página para agendamento de video conferências entre o personal e o aluno.
+5. **Avaliação Física:** Página para coleta de informações corporais do usuário e cálculo de métricas como IMC.
