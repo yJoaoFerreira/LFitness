@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Importar ícone
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomeTraining({ isHighContrast }) {
   const [peso, setPeso] = useState('');
   const [altura, setAltura] = useState('');
   const [dorArticulacao, setDorArticulacao] = useState(false);
+  const [tipoDor, setTipoDor] = useState('');
   const [hipertenso, setHipertenso] = useState(false);
   const [restricao, setRestricao] = useState('');
 
@@ -14,12 +15,18 @@ export default function HomeTraining({ isHighContrast }) {
   Peso: ${peso}
   Altura: ${altura}
   Sente dor nas articulações? ${dorArticulacao ? 'Sim' : 'Não'}
+  ${dorArticulacao ? `Tipo de dor: ${tipoDor}` : ''}
   Hipertenso? ${hipertenso ? 'Sim' : 'Não'}
   Restrição: ${restricao}`;
 
   const handleWhatsAppPress = () => {
     const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
+  };
+
+  const handleExternalLinkPress = () => {
+    const url = 'https://www.example.com/exercicio';
+    Linking.openURL(url).catch(err => console.error('Erro ao abrir o link', err));
   };
 
   const data = [
@@ -93,17 +100,34 @@ export default function HomeTraining({ isHighContrast }) {
   return (
     <View style={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
       <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>
-        Consultoria Online
+        Treino em Casa
       </Text>
 
-      {/* FlatList para renderizar o formulário */}
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.key}
       />
 
-      {/* Botão do WhatsApp */}
+      {dorArticulacao && (
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>
+            Qual dor você sente?
+          </Text>
+          <TextInput
+            style={[styles.input, isHighContrast && styles.inputHighContrast]}
+            placeholder="Descreva a dor"
+            value={tipoDor}
+            onChangeText={setTipoDor}
+            placeholderTextColor={isHighContrast ? '#999' : '#888'}
+          />
+        </View>
+      )}
+
+      <TouchableOpacity style={styles.button} onPress={handleExternalLinkPress}>
+        <Text style={styles.buttonText}>Ir para Exercício</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
         <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>Enviar Mensagem no WhatsApp</Text>
