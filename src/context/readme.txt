@@ -1,1 +1,0 @@
-Para gerenciamento de estado global, como a Context API ou Redux, onde ficam os arquivos que gerenciam o estado da aplicação e seu contexto.
