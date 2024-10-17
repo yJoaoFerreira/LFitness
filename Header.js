@@ -6,13 +6,21 @@ export default function Header({ navigation, onToggleTheme, isHighContrast }) {
   return (
     <View style={[styles.header, isHighContrast ? styles.highContrast : styles.default]}>
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <Ionicons name="menu" size={32} color={isHighContrast ? '#fff' : '#000'} />
+        <Ionicons name="menu" size={32} color={isHighContrast ? '#fff' : '#000'}/>
       </TouchableOpacity>
+
+    <TouchableOpacity>
+      <Ionicons name='settings-outline' size={32} color={isHighContrast ? '#fff' : '#000'}/>
+    </TouchableOpacity>
 
       <Image source={require('./assets/logo.png')} style={styles.logo} />
 
+    <TouchableOpacity>
+      <Ionicons name="person-outline" size={32} color={isHighContrast ? '#fff' : '#000'}/>
+    </TouchableOpacity>
+
       <TouchableOpacity onPress={onToggleTheme}>
-        <Ionicons name="contrast" size={32} color={isHighContrast ? '#fff' : '#000'} />
+        <Ionicons name="contrast" size={32} color={isHighContrast ? '#fff' : '#000'}/>
       </TouchableOpacity>
     </View>
   );
