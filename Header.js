@@ -3,6 +3,11 @@ import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Header({ navigation, onToggleTheme, isHighContrast }) {
+
+  const goToLogin = () => {
+    navigation.navigate('Login');
+  };
+
   return (
     <View style={[styles.header, isHighContrast ? styles.highContrast : styles.default]}>
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
@@ -15,7 +20,7 @@ export default function Header({ navigation, onToggleTheme, isHighContrast }) {
 
       <Image source={require('./assets/logo.png')} style={styles.logo} />
 
-    <TouchableOpacity>
+    <TouchableOpacity onPress={goToLogin}>
       <Ionicons name="person-outline" size={32} color={isHighContrast ? '#fff' : '#000'}/>
     </TouchableOpacity>
 
