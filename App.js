@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-// Importando as telas
 import Register from './screens/Register';
 import Login from './screens/Login';
 import Training from './screens/Training';
@@ -15,7 +14,6 @@ import Home from './screens/Home';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-// Stack Navigator para a navegação interna
 const HomeStack = ({ route }) => (
   <Stack.Navigator>
     <Stack.Screen 
@@ -28,7 +26,6 @@ const HomeStack = ({ route }) => (
   </Stack.Navigator>
 );
 
-// Drawer Navigator para a navegação lateral
 const DrawerNav = ({ funcLogar }) => (
   <Drawer.Navigator>
     <Drawer.Screen name="Home" component={(props) => <HomeStack {...props} route={{ params: { funcLogar } }} />} />
