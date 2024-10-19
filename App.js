@@ -11,28 +11,121 @@ import Settings from './screens/Settings';
 import About from './screens/About';
 import Student from './screens/Student';
 import Home from './screens/Home';
+import Header from './components/Header';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const HomeStack = ({ route }) => (
+const HomeStack = ({ navigation, route }) => (
+  <>
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Home" 
+        component={Home} 
+        initialParams={{ funcLogar: route.params?.funcLogar }} 
+        options={{
+          header: () => (
+            <Header 
+              navigation={navigation} 
+              onToggleTheme={() => {}}
+              isHighContrast={false}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen 
+        name="Aluno" 
+        component={Student} 
+        options={{
+          header: () => (
+            <Header 
+              navigation={navigation} 
+              onToggleTheme={() => {}} 
+              isHighContrast={false}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  </>
+);
+
+const SettingsStack = ({ navigation }) => (
   <Stack.Navigator>
     <Stack.Screen 
-      name="Home" 
-      component={Home} 
-      initialParams={{ funcLogar: route.params.funcLogar }} 
-      options={{ headerShown: false }} 
+      name="Configurações" 
+      component={Settings} 
+      options={{
+        header: () => (
+          <Header 
+            navigation={navigation} 
+            onToggleTheme={() => {}} 
+            isHighContrast={false}
+          />
+        ),
+      }}
     />
-    <Stack.Screen name="Aluno" component={Student} />
+  </Stack.Navigator>
+);
+
+const TrainingStack = ({ navigation }) => (
+  <Stack.Navigator>
+    <Stack.Screen 
+      name="Treino" 
+      component={Training} 
+      options={{
+        header: () => (
+          <Header 
+            navigation={navigation} 
+            onToggleTheme={() => {}} 
+            isHighContrast={false}
+          />
+        ),
+      }}
+    />
+  </Stack.Navigator>
+);
+
+const AboutStack = ({ navigation }) => (
+  <Stack.Navigator>
+    <Stack.Screen 
+      name="Sobre Mim" 
+      component={About} 
+      options={{
+        header: () => (
+          <Header 
+            navigation={navigation} 
+            onToggleTheme={() => {}} 
+            isHighContrast={false}
+          />
+        ),
+      }}
+    />
   </Stack.Navigator>
 );
 
 const DrawerNav = ({ funcLogar }) => (
   <Drawer.Navigator>
-    <Drawer.Screen name="Home" component={(props) => <HomeStack {...props} route={{ params: { funcLogar } }} />} />
-    <Drawer.Screen name="Treino" component={Training} />
-    <Drawer.Screen name="Configurações" component={Settings} />
-    <Drawer.Screen name="Sobre Mim" component={About} />
+    <Drawer.Screen 
+      name="Home" 
+      component={(props) => <HomeStack {...props} route={{ params: { funcLogar } }} />} 
+      options={{ headerShown: false }}
+    />
+    <Drawer.Screen 
+      name="Treino" 
+      component={TrainingStack}
+      options={{ headerShown: false }}
+    />
+    <Drawer.Screen 
+      name="Configurações" 
+      component={SettingsStack}
+      options={{ headerShown: false }}
+    />
+    <Drawer.Screen 
+      name="Sobre Mim" 
+      component={AboutStack}
+      options={{ headerShown: false }}
+    />
   </Drawer.Navigator>
 );
 
@@ -45,9 +138,22 @@ const App = () => {
         <DrawerNav funcLogar={setLogado} />
       ) : (
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} initialParams={{ funcLogar: setLogado }} />
-          <Stack.Screen name="Registrar" component={Register} />
-          <Stack.Screen name = "TrocarSenha" component={ChangePassword} />
+          <Stack.Screen 
+            name="Login" 
+            component={Login} 
+            initialParams={{ funcLogar: setLogado }} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Registrar" 
+            component={Register} 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="TrocarSenha" 
+            component={ChangePassword} 
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>
