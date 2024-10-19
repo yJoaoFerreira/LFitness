@@ -7,7 +7,6 @@ import HomeTraining from './HomeTraining';
 import OnlineConsulting from './OnlineConsulting';
 import PhysicalAssessment from './PhysicalAssessment';
 import Student from './Student';
-import Login from './Login';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,9 +45,6 @@ export default function App() {
         </Drawer.Screen>
         <Drawer.Screen name="Treino em Casa">
           {() => <HomeTraining isHighContrast={isHighContrast} />}
-        </Drawer.Screen>
-        <Drawer.Screen name="Login">
-          {() => <Login isHighContrast={isHighContrast} />}
         </Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>

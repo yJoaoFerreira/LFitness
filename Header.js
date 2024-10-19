@@ -4,8 +4,12 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function Header({ navigation, onToggleTheme, isHighContrast }) {
 
-  const goToLogin = () => {
-    navigation.navigate('Login');
+  const goToHome = () => {
+    navigation.navigate('Home');
+  };
+  
+  const goToStudent = () => {
+    navigation.navigate('Aluno');
   };
 
   return (
@@ -18,9 +22,11 @@ export default function Header({ navigation, onToggleTheme, isHighContrast }) {
       <Ionicons name='settings-outline' size={32} color={isHighContrast ? '#fff' : '#000'}/>
     </TouchableOpacity>
 
+    <TouchableOpacity onPress={goToHome}>
       <Image source={require('./assets/logo.png')} style={styles.logo} />
+    </TouchableOpacity>
 
-    <TouchableOpacity onPress={goToLogin}>
+    <TouchableOpacity onPress={goToStudent}>
       <Ionicons name="person-outline" size={32} color={isHighContrast ? '#fff' : '#000'}/>
     </TouchableOpacity>
 
