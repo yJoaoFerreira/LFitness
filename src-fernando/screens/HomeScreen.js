@@ -1,5 +1,5 @@
 import { View, Pressable,Text} from 'react-native';
-import styles from '../../Styles';
+import styles from './Styles';
 
 
 

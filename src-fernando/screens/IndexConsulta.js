@@ -1,8 +1,7 @@
 import { useState} from 'react';
 import {Text,View,TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import styles from '../../Styles';
+import styles from './Styles';
 
 const CheckBox = ({options = [], multiple=false}) =>{
   const [selected, setSelected] = useState([]);

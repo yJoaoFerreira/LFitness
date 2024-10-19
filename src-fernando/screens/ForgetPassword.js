@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text,TextInput,Pressable,Linking } from 'react-native';
-import styles from '../../Styles';
+import styles from './Styles';
 
 export default function EsqueciSenha() {
    const[emailConfirma,setEmailConfirma]=useState("");

@@ -1,6 +1,6 @@
 import { View, Text,SafeAreaView } from 'react-native';
 import CheckBox from './IndexConsulta';
-import styles from '../../Styles';
+import styles from './Styles';
 
 
 const CheckBoxPage = () =>{
