@@ -3,8 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import Register from './screens/Register';
 import Login from './screens/Login';
+import Register from './screens/Register';
+import ChangePassword from './screens/ChangePassword';
 import Training from './screens/Training';
 import Settings from './screens/Settings';
 import About from './screens/About';
@@ -46,6 +47,7 @@ const App = () => {
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} initialParams={{ funcLogar: setLogado }} />
           <Stack.Screen name="Registrar" component={Register} />
+          <Stack.Screen name = "TrocarSenha" component={ChangePassword} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

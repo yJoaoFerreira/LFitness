@@ -58,10 +58,10 @@ const Login = ({ navigation, route }) => {
       </Pressable>
 
       <View style={styles.subContainer}>
-        <Pressable style={styles.subButton} onPress={() => navigation.push('Esqueci Senha')}>
+        <Pressable style={styles.subButton} onPress={() => navigation.push('TrocarSenha')}>
           <Text style={styles.subButtonText}>Esqueci Senha</Text>
         </Pressable>
-        <Pressable style={styles.subButton} onPress={() => navigation.push('Novo Usuario')}>
+        <Pressable style={styles.subButton} onPress={() => navigation.push('Registrar')}>
           <Text style={styles.subButtonText}>Novo Usuário</Text>
         </Pressable>
       </View>
