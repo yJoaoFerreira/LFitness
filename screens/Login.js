@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'; // Importando ActivityIndicator
 import { Ionicons } from '@expo/vector-icons';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Firebase from '../firebaseConfig';
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const toggleSenhaVisivel = () => {
     setSenhaVisivel(!senhaVisivel);
@@ -45,26 +49,54 @@ const Login = ({ navigation, route }) => {
     </View>
   );
 
+  const handleLogin = () => {
+    const auth = getAuth(Firebase);
+    setLoading(true);
+    signInWithEmailAndPassword(auth, email, senha)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('Usuário autenticado:', user);
+        
+        setTimeout(() => {
+          setLoading(false);
+          route.params.funcLogar(true);
+        }, 2500);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error.message);
+        console.error('Erro ao logar:', error);
+      });
+  };
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={formData}
-        keyExtractor={(item) => item.label}
-        renderItem={renderFormItem}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#3498db" />
+      ) : (
+        <>
+          <FlatList
+            data={formData}
+            keyExtractor={(item) => item.label}
+            renderItem={renderFormItem}
+          />
+          
+          {error ? <Text style={styles.errorText}>{error}</Text> : null} {/* Exibir mensagem de erro */}
 
-      <Pressable style={styles.formButton} onPress={() => route.params.funcLogar(true)}>
-        <Text style={styles.buttonText}>Logar</Text>
-      </Pressable>
+          <Pressable style={styles.formButton} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Logar</Text>
+          </Pressable>
 
-      <View style={styles.subContainer}>
-        <Pressable style={styles.subButton} onPress={() => navigation.push('TrocarSenha')}>
-          <Text style={styles.subButtonText}>Esqueci Senha</Text>
-        </Pressable>
-        <Pressable style={styles.subButton} onPress={() => navigation.push('Registrar')}>
-          <Text style={styles.subButtonText}>Novo Usuário</Text>
-        </Pressable>
-      </View>
+          <View style={styles.subContainer}>
+            <Pressable style={styles.subButton} onPress={() => navigation.push('TrocarSenha')}>
+              <Text style={styles.subButtonText}>Esqueci Senha</Text>
+            </Pressable>
+            <Pressable style={styles.subButton} onPress={() => navigation.push('Registrar')}>
+              <Text style={styles.subButtonText}>Novo Usuário</Text>
+            </Pressable>
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -125,6 +157,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     color: '#3498db',
+  },
+  errorText: {
+    color: 'red',
+    marginVertical: 10,
+    fontWeight: 'bold',
   },
 });
 
