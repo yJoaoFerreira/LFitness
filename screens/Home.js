@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Home = ({ navigation, route }) => {
   const { funcLogar, isHighContrast } = route.params;
@@ -9,7 +10,13 @@ const Home = ({ navigation, route }) => {
     navigation.replace("Login");
   };
 
-  // Definir os estilos baseados no isHighContrast
+  // useFocusEffect para garantir que a tela atualize corretamente quando voltar ao foco
+  useFocusEffect(
+    React.useCallback(() => {
+      navigation.setParams({ isHighContrast });
+    }, [isHighContrast])
+  );
+
   const styles = createStyles(isHighContrast);
 
   return (
@@ -29,7 +36,6 @@ const Home = ({ navigation, route }) => {
   );
 };
 
-// Função para criar estilos condicionalmente
 const createStyles = (isHighContrast) => StyleSheet.create({
   container: {
     flex: 1,
@@ -56,7 +62,7 @@ const createStyles = (isHighContrast) => StyleSheet.create({
     width: '80%',
   },
   buttonText: {
-    color: '#fff',
+    color: isHighContrast ? '#000' : '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },

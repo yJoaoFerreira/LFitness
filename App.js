@@ -17,40 +17,51 @@ import Loading from './components/Loading';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const HomeStack = ({ navigation, route, isHighContrast, onToggleTheme }) => (
-  
+// Stack Navigator para Home e Aluno
+const HomeStack = ({ navigation, route, isHighContrast, onToggleTheme }) => {
+  useEffect(() => {
+    // Atualizar parâmetros quando o tema mudar
+    navigation.setParams({ isHighContrast });
+  }, [isHighContrast]);
 
-  <Stack.Navigator>
-    <Stack.Screen 
-      name="Home" 
-      component={Home} 
-      initialParams={{ funcLogar: route.params?.funcLogar }} 
-      options={{
-        header: () => (
-          <Header 
-            navigation={navigation} 
-            onToggleTheme={onToggleTheme} 
-            isHighContrast={isHighContrast} 
-          />
-        ),
-      }}
-    />
-    <Stack.Screen 
-      name="Aluno" 
-      component={Student} 
-      options={{
-        header: () => (
-          <Header 
-            navigation={navigation} 
-            onToggleTheme={onToggleTheme} 
-            isHighContrast={isHighContrast}
-          />
-        ),
-      }}
-    />
-  </Stack.Navigator>
-);
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Home" 
+        component={Home} 
+        initialParams={{ 
+          funcLogar: route.params?.funcLogar,
+          isHighContrast,
+          onToggleTheme 
+        }} 
+        options={{
+          header: () => (
+            <Header 
+              navigation={navigation} 
+              onToggleTheme={onToggleTheme} 
+              isHighContrast={isHighContrast} 
+            />
+          ),
+        }}
+      />
+      <Stack.Screen 
+        name="Aluno" 
+        component={Student} 
+        options={{
+          header: () => (
+            <Header 
+              navigation={navigation} 
+              onToggleTheme={onToggleTheme} 
+              isHighContrast={isHighContrast} 
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
+// Stack Navigator para Configurações
 const SettingsStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   <Stack.Navigator>
     <Stack.Screen 
@@ -69,6 +80,7 @@ const SettingsStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   </Stack.Navigator>
 );
 
+// Stack Navigator para Treino
 const TrainingStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   <Stack.Navigator>
     <Stack.Screen 
@@ -87,6 +99,7 @@ const TrainingStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   </Stack.Navigator>
 );
 
+// Stack Navigator para Sobre Mim
 const AboutStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   <Stack.Navigator>
     <Stack.Screen 
@@ -105,6 +118,7 @@ const AboutStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   </Stack.Navigator>
 );
 
+// Drawer Navigator
 const DrawerNav = ({ funcLogar, isHighContrast, onToggleTheme }) => (
   <Drawer.Navigator>
     <Drawer.Screen 
@@ -135,6 +149,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isHighContrast, setIsHighContrast] = useState(false);
 
+  // Simulação de loading inicial
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -143,6 +158,7 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Função para alternar o tema de alto contraste
   const onToggleTheme = () => {
     setIsHighContrast(prevState => !prevState);
   };
