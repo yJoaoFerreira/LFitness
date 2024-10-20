@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Home = ({ navigation, route }) => {
+  const { funcLogar, isHighContrast } = route.params;
+
   const deslogar = () => {
-    route.params.funcLogar(false);
+    funcLogar(false);
     navigation.replace("Login");
   };
+
+  // Definir os estilos baseados no isHighContrast
+  const styles = createStyles(isHighContrast);
 
   return (
     <View style={styles.container}>
@@ -24,10 +29,11 @@ const Home = ({ navigation, route }) => {
   );
 };
 
-const styles = StyleSheet.create({
+// Função para criar estilos condicionalmente
+const createStyles = (isHighContrast) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: isHighContrast ? '#000000' : '#f0f0f0',
   },
   content: {
     flex: 1,
@@ -39,10 +45,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: '#333',
+    color: isHighContrast ? '#FFFFFF' : '#333',
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: isHighContrast ? '#00FF00' : '#007BFF',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -55,7 +61,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   logoutButton: {
-    backgroundColor: '#FF4C4C',
+    backgroundColor: isHighContrast ? '#FF4C4C' : '#FF4C4C',
   },
 });
 
