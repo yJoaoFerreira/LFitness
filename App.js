@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -12,6 +12,7 @@ import About from './screens/About';
 import Student from './screens/Student';
 import Home from './screens/Home';
 import Header from './components/Header';
+import Loading from './components/Loading';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -27,8 +28,8 @@ const HomeStack = ({ navigation, route }) => (
           header: () => (
             <Header 
               navigation={navigation} 
-              onToggleTheme={() => {}}
-              isHighContrast={false}
+              onToggleTheme={() => {}} 
+              isHighContrast={false} 
             />
           ),
         }}
@@ -60,7 +61,7 @@ const SettingsStack = ({ navigation }) => (
           <Header 
             navigation={navigation} 
             onToggleTheme={() => {}} 
-            isHighContrast={false}
+            isHighContrast={false} 
           />
         ),
       }}
@@ -109,28 +110,41 @@ const DrawerNav = ({ funcLogar }) => (
     <Drawer.Screen 
       name="Home" 
       component={(props) => <HomeStack {...props} route={{ params: { funcLogar } }} />} 
-      options={{ headerShown: false }}
+      options={{ headerShown: false }} 
     />
     <Drawer.Screen 
       name="Treino" 
-      component={TrainingStack}
-      options={{ headerShown: false }}
+      component={TrainingStack}  
+      options={{ headerShown: false }} 
     />
     <Drawer.Screen 
       name="Configurações" 
-      component={SettingsStack}
-      options={{ headerShown: false }}
+      component={SettingsStack}  
+      options={{ headerShown: false }}  
     />
     <Drawer.Screen 
       name="Sobre Mim" 
-      component={AboutStack}
-      options={{ headerShown: false }}
+      component={AboutStack}  
+      options={{ headerShown: false }} 
     />
   </Drawer.Navigator>
 );
 
 const App = () => {
   const [estaLogado, setLogado] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <NavigationContainer>
@@ -142,17 +156,17 @@ const App = () => {
             name="Login" 
             component={Login} 
             initialParams={{ funcLogar: setLogado }} 
-            options={{ headerShown: false }}
+            options={{ headerShown: false }}  
           />
           <Stack.Screen 
             name="Registrar" 
             component={Register} 
-            options={{ headerShown: false }}
+            options={{ headerShown: false }}  
           />
           <Stack.Screen 
             name="TrocarSenha" 
             component={ChangePassword} 
-            options={{ headerShown: false }}
+            options={{ headerShown: false }}  
           />
         </Stack.Navigator>
       )}
