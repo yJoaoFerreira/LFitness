@@ -1,23 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
 const Home = ({ navigation, route }) => {
-  const { funcLogar, isHighContrast } = route.params;
+  const { funcLogar } = route.params;
 
   const deslogar = () => {
     funcLogar(false);
     navigation.replace("Login");
   };
-
-  // useFocusEffect para garantir que a tela atualize corretamente quando voltar ao foco
-  useFocusEffect(
-    React.useCallback(() => {
-      navigation.setParams({ isHighContrast });
-    }, [isHighContrast])
-  );
-
-  const styles = createStyles(isHighContrast);
 
   return (
     <View style={styles.container}>
@@ -36,10 +26,10 @@ const Home = ({ navigation, route }) => {
   );
 };
 
-const createStyles = (isHighContrast) => StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: isHighContrast ? '#000000' : '#f0f0f0',
+    backgroundColor: '#f0f0f0',
   },
   content: {
     flex: 1,
@@ -51,10 +41,10 @@ const createStyles = (isHighContrast) => StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: isHighContrast ? '#FFFFFF' : '#333',
+    color: '#333',
   },
   button: {
-    backgroundColor: isHighContrast ? '#00FF00' : '#007BFF',
+    backgroundColor: '#007BFF',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -62,12 +52,12 @@ const createStyles = (isHighContrast) => StyleSheet.create({
     width: '80%',
   },
   buttonText: {
-    color: isHighContrast ? '#000' : '#fff',
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
   logoutButton: {
-    backgroundColor: isHighContrast ? '#FF4C4C' : '#FF4C4C',
+    backgroundColor: '#FF4C4C',
   },
 });
 

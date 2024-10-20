@@ -17,29 +17,19 @@ import Loading from './components/Loading';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-// Stack Navigator para Home e Aluno
-const HomeStack = ({ navigation, route, isHighContrast, onToggleTheme }) => {
-  useEffect(() => {
-    // Atualizar parâmetros quando o tema mudar
-    navigation.setParams({ isHighContrast });
-  }, [isHighContrast]);
-
+const HomeStack = ({ navigation, route }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen 
         name="Home" 
         component={Home} 
         initialParams={{ 
-          funcLogar: route.params?.funcLogar,
-          isHighContrast,
-          onToggleTheme 
+          funcLogar: route.params?.funcLogar
         }} 
         options={{
           header: () => (
             <Header 
-              navigation={navigation} 
-              onToggleTheme={onToggleTheme} 
-              isHighContrast={isHighContrast} 
+              navigation={navigation}
             />
           ),
         }}
@@ -50,9 +40,7 @@ const HomeStack = ({ navigation, route, isHighContrast, onToggleTheme }) => {
         options={{
           header: () => (
             <Header 
-              navigation={navigation} 
-              onToggleTheme={onToggleTheme} 
-              isHighContrast={isHighContrast} 
+              navigation={navigation}
             />
           ),
         }}
@@ -61,8 +49,7 @@ const HomeStack = ({ navigation, route, isHighContrast, onToggleTheme }) => {
   );
 };
 
-// Stack Navigator para Configurações
-const SettingsStack = ({ navigation, isHighContrast, onToggleTheme }) => (
+const SettingsStack = ({ navigation }) => (
   <Stack.Navigator>
     <Stack.Screen 
       name="Configurações" 
@@ -71,8 +58,6 @@ const SettingsStack = ({ navigation, isHighContrast, onToggleTheme }) => (
         header: () => (
           <Header 
             navigation={navigation} 
-            onToggleTheme={onToggleTheme} 
-            isHighContrast={isHighContrast} 
           />
         ),
       }}
@@ -80,8 +65,7 @@ const SettingsStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   </Stack.Navigator>
 );
 
-// Stack Navigator para Treino
-const TrainingStack = ({ navigation, isHighContrast, onToggleTheme }) => (
+const TrainingStack = ({ navigation }) => (
   <Stack.Navigator>
     <Stack.Screen 
       name="Treino" 
@@ -90,8 +74,6 @@ const TrainingStack = ({ navigation, isHighContrast, onToggleTheme }) => (
         header: () => (
           <Header 
             navigation={navigation} 
-            onToggleTheme={onToggleTheme} 
-            isHighContrast={isHighContrast}
           />
         ),
       }}
@@ -99,8 +81,7 @@ const TrainingStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   </Stack.Navigator>
 );
 
-// Stack Navigator para Sobre Mim
-const AboutStack = ({ navigation, isHighContrast, onToggleTheme }) => (
+const AboutStack = ({ navigation }) => (
   <Stack.Navigator>
     <Stack.Screen 
       name="Sobre Mim" 
@@ -109,8 +90,6 @@ const AboutStack = ({ navigation, isHighContrast, onToggleTheme }) => (
         header: () => (
           <Header 
             navigation={navigation} 
-            onToggleTheme={onToggleTheme} 
-            isHighContrast={isHighContrast}
           />
         ),
       }}
@@ -118,27 +97,26 @@ const AboutStack = ({ navigation, isHighContrast, onToggleTheme }) => (
   </Stack.Navigator>
 );
 
-// Drawer Navigator
-const DrawerNav = ({ funcLogar, isHighContrast, onToggleTheme }) => (
+const DrawerNav = ({ funcLogar }) => (
   <Drawer.Navigator>
     <Drawer.Screen 
       name="Home" 
-      component={(props) => <HomeStack {...props} route={{ params: { funcLogar } }} isHighContrast={isHighContrast} onToggleTheme={onToggleTheme} />} 
+      component={(props) => <HomeStack {...props} route={{ params: { funcLogar } }} />} 
       options={{ headerShown: false }} 
     />
     <Drawer.Screen 
       name="Treino" 
-      component={(props) => <TrainingStack {...props} isHighContrast={isHighContrast} onToggleTheme={onToggleTheme} />}  
+      component={TrainingStack}  
       options={{ headerShown: false }} 
     />
     <Drawer.Screen 
       name="Configurações" 
-      component={(props) => <SettingsStack {...props} isHighContrast={isHighContrast} onToggleTheme={onToggleTheme} />}  
+      component={SettingsStack}  
       options={{ headerShown: false }}  
     />
     <Drawer.Screen 
       name="Sobre Mim" 
-      component={(props) => <AboutStack {...props} isHighContrast={isHighContrast} onToggleTheme={onToggleTheme} />}  
+      component={AboutStack}  
       options={{ headerShown: false }} 
     />
   </Drawer.Navigator>
@@ -147,9 +125,7 @@ const DrawerNav = ({ funcLogar, isHighContrast, onToggleTheme }) => (
 const App = () => {
   const [estaLogado, setLogado] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isHighContrast, setIsHighContrast] = useState(false);
 
-  // Simulação de loading inicial
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -158,11 +134,6 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Função para alternar o tema de alto contraste
-  const onToggleTheme = () => {
-    setIsHighContrast(prevState => !prevState);
-  };
-
   if (loading) {
     return <Loading />;
   }
@@ -170,7 +141,7 @@ const App = () => {
   return (
     <NavigationContainer>
       {estaLogado ? (
-        <DrawerNav funcLogar={setLogado} isHighContrast={isHighContrast} onToggleTheme={onToggleTheme} />
+        <DrawerNav funcLogar={setLogado} />
       ) : (
         <Stack.Navigator>
           <Stack.Screen 
