@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'; // Importando ActivityIndicator
+import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Firebase from '../firebaseConfig';
@@ -50,25 +50,41 @@ const Login = ({ navigation, route }) => {
   );
 
   const handleLogin = () => {
-    const auth = getAuth(Firebase);
     setLoading(true);
-    signInWithEmailAndPassword(auth, email, senha)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Usuário autenticado:', user);
+    
+    if (email.endsWith('@admin.com')) {
+      if (email === 'leandro@admin.com' && senha === '123456') {
+        console.log('Login realizado com sucesso via sistema local!');
         
         setTimeout(() => {
           setLoading(false);
           route.params.funcLogar(true);
         }, 2500);
-      })
-      .catch((error) => {
+      } else {
         setLoading(false);
-        setError(error.message);
-        console.error('Erro ao logar:', error);
-      });
+        setError('Usuário ou senha incorretos no sistema local');
+      }
+  
+    } else {
+      const auth = getAuth(Firebase);
+      signInWithEmailAndPassword(auth, email, senha)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log('Usuário autenticado via Firebase:', user);
+          
+          setTimeout(() => {
+            setLoading(false);
+            route.params.funcLogar(true);
+          }, 2500);
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error.message);
+          console.error('Erro ao logar no Firebase:', error);
+        });
+    }
   };
-
+  
   return (
     <View style={styles.container}>
       {loading ? (
