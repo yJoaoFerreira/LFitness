@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Firebase from '../firebaseConfig';
 
 const Login = ({ navigation, route }) => {
@@ -10,6 +11,21 @@ const Login = ({ navigation, route }) => {
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadStoredCredentials = async () => {
+      try {
+        const storedEmail = await AsyncStorage.getItem('email');
+        const storedSenha = await AsyncStorage.getItem('senha');
+        if (storedEmail !== null) setEmail(storedEmail);
+        if (storedSenha !== null) setSenha(storedSenha);
+      } catch (e) {
+        console.log('Erro ao carregar credenciais salvas:', e);
+      }
+    };
+
+    loadStoredCredentials();
+  }, []);
 
   const toggleSenhaVisivel = () => {
     setSenhaVisivel(!senhaVisivel);
@@ -56,6 +72,8 @@ const Login = ({ navigation, route }) => {
       if (email === 'leandro@admin.com' && senha === '123456') {
         console.log('Login realizado com sucesso via sistema local!');
         
+        saveCredentials(email, senha);
+
         setTimeout(() => {
           setLoading(false);
           route.params.funcLogar(true);
@@ -72,6 +90,8 @@ const Login = ({ navigation, route }) => {
           const user = userCredential.user;
           console.log('Usuário autenticado via Firebase:', user);
           
+          saveCredentials(email, senha);
+
           setTimeout(() => {
             setLoading(false);
             route.params.funcLogar(true);
@@ -84,7 +104,17 @@ const Login = ({ navigation, route }) => {
         });
     }
   };
-  
+
+  const saveCredentials = async (email, senha) => {
+    try {
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('senha', senha);
+      console.log('Credenciais salvas com sucesso');
+    } catch (e) {
+      console.log('Erro ao salvar credenciais:', e);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -97,7 +127,7 @@ const Login = ({ navigation, route }) => {
             renderItem={renderFormItem}
           />
           
-          {error ? <Text style={styles.errorText}>{error}</Text> : null} {/* Exibir mensagem de erro */}
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
           <Pressable style={styles.formButton} onPress={handleLogin}>
             <Text style={styles.buttonText}>Logar</Text>
