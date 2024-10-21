@@ -10,7 +10,7 @@ export default function Header({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-        <Image source={require('../assets/logo.png')} style={styles.logo} />
+        <Image source={require('../assets/logo.png')} style={styles.logo} testID='logo' />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Configurações')}>
