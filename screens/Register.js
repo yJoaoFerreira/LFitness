@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import Firebase from '../firebaseConfig';
+
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');

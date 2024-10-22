@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import Firebase from '../firebaseConfig';
+
 
 const ChangePassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -9,22 +8,7 @@ const ChangePassword = ({ navigation }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handlePasswordReset = () => {
-    const auth = getAuth(Firebase);
-    setLoading(true);
-    setError('');
-    setSuccessMessage('');
 
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        setLoading(false);
-        setSuccessMessage('Email de redefinição de senha enviado com sucesso!');
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error.message);
-      });
-  };
 
   return (
     <View style={styles.container}>

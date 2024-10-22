@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Firebase from '../firebaseConfig';
+
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
