@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "LFitness",
-    "slug": "LFitness",
+    "slug": "lfitness",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,6 +22,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "91b4d974-bd9b-4941-9811-e7e21dd4565c"
+      }
+    },
+    "owner": "yjoaoferreira",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/91b4d974-bd9b-4941-9811-e7e21dd4565c"
     }
   }
 }
