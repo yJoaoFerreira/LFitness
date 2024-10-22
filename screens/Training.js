@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Importar ícone
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { CheckBox } from 'react-native-elements';
 
 export default function Training({ isHighContrast }) {
   const [peso, setPeso] = useState('');
@@ -9,24 +10,22 @@ export default function Training({ isHighContrast }) {
   const [tipoDor, setTipoDor] = useState('');
   const [hipertenso, setHipertenso] = useState(false);
   const [restricao, setRestricao] = useState('');
+  const [treinoCasa, setTreinoCasa] = useState(false);
+  const [treinoAcademia, setTreinoAcademia] = useState(false);
 
-  const whatsappNumber = '5511999999999';
+  const whatsappNumber = '5521970952662';
   const message = `Olá, gostaria de mais informações!
   Peso: ${peso}
   Altura: ${altura}
   Sente dor nas articulações? ${dorArticulacao ? 'Sim' : 'Não'}
   ${dorArticulacao ? `Tipo de dor: ${tipoDor}` : ''}
   Hipertenso? ${hipertenso ? 'Sim' : 'Não'}
-  Restrição: ${restricao}`;
+  Restrição: ${restricao}
+  Preferência de treino: ${treinoCasa ? 'Casa' : treinoAcademia ? 'Academia' : 'Não especificado'}`;
 
   const handleWhatsAppPress = () => {
     const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
-  };
-
-  const handleExternalLinkPress = () => {
-    const url = 'https://www.example.com/exercicio';
-    Linking.openURL(url).catch(err => console.error('Erro ao abrir o link', err));
   };
 
   const data = [
@@ -124,13 +123,26 @@ export default function Training({ isHighContrast }) {
         </View>
       )}
 
-      <TouchableOpacity style={styles.button} onPress={handleExternalLinkPress}>
-        <Text style={styles.buttonText}>Ir para Exercício</Text>
-      </TouchableOpacity>
+      <View style={styles.checkboxContainer}>
+        <CheckBox
+          title="Treino em Casa"
+          checked={treinoCasa}
+          onPress={() => setTreinoCasa(!treinoCasa)}
+          checkedColor={isHighContrast ? '#ddd' : '#25D366'}
+          uncheckedColor={isHighContrast ? '#999' : '#ccc'}
+        />
+        <CheckBox
+          title="Treino na Academia"
+          checked={treinoAcademia}
+          onPress={() => setTreinoAcademia(!treinoAcademia)}
+          checkedColor={isHighContrast ? '#ddd' : '#25D366'}
+          uncheckedColor={isHighContrast ? '#999' : '#ccc'}
+        />
+      </View>
 
       <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
         <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} />
-        <Text style={styles.buttonText}>Enviar Mensagem no WhatsApp</Text>
+        <Text style={styles.buttonText}>Enviar Informações</Text>
       </TouchableOpacity>
     </View>
   );
@@ -141,7 +153,6 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   highContrastBackground: {
     backgroundColor: '#000',
@@ -205,5 +216,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+  checkboxContainer: {
+    width: '100%',
+    marginVertical: 10,
   },
 });
