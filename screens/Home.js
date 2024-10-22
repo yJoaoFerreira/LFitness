@@ -21,8 +21,6 @@ const Home = ({ navigation, route }) => {
         <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={deslogar}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
-
-         
       </View>
     </View>
   );

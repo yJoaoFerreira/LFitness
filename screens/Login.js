@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator,KeyboardAvoidingView,Platform,ScrollView} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -44,9 +44,11 @@ const Login = ({ navigation, route }) => {
   ];
 
   const renderFormItem = ({ item }) => (
+    
     <View style={styles.inputContainer}>
       <Text style={styles.label}>{item.label}</Text>
       <View style={styles.inputWrapper}>
+       
         <TextInput
           style={styles.formInput}
           placeholder={item.placeholder}
@@ -56,6 +58,7 @@ const Login = ({ navigation, route }) => {
           autoCapitalize="none"
           keyboardType={item.secureTextEntry ? 'default' : 'email-address'}
         />
+      
         {item.isPassword && (
           <TouchableOpacity onPress={toggleSenhaVisivel} style={styles.eyeIcon}>
             <Ionicons name={senhaVisivel ? 'eye-off' : 'eye'} size={24} color="gray" />
@@ -63,6 +66,7 @@ const Login = ({ navigation, route }) => {
         )}
       </View>
     </View>
+   
   );
 
   const handleLogin = () => {
@@ -116,7 +120,9 @@ const Login = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
+   <KeyboardAvoidingView style={styles.container} behavior ={Platform.OS == "android" ? "padding" : "height"}> 
+    <ScrollView style={{width:"100%"}}>
+     <View style={styles.containerview}>
       {loading ? (
         <ActivityIndicator size="large" color="#3498db" />
       ) : (
@@ -143,7 +149,9 @@ const Login = ({ navigation, route }) => {
           </View>
         </>
       )}
-    </View>
+     </View>
+    </ScrollView>
+   </KeyboardAvoidingView>
   );
 };
 
@@ -154,6 +162,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#f8f8f8',
   },
+
+   containerview: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    padding: 300,
+    backgroundColor: '#f8f8f8',
+  },
+  
+  
   label: {
     paddingVertical: 5,
     fontWeight: '700',
@@ -162,6 +180,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 15,
+    
   },
   inputWrapper: {
     flexDirection: 'row',
@@ -175,6 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     backgroundColor: '#fff',
+    
   },
   eyeIcon: {
     marginLeft: 10,

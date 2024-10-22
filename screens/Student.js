@@ -25,14 +25,13 @@ const Student = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.iconback}>
+       <View style={styles.iconback}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
            <Ionicons name="arrow-back" size={24} color="black" />
           </TouchableOpacity>
        </View>
-      
       <Text style={styles.title}>Área do Aluno</Text>
-       
+
       <TouchableOpacity style={styles.button} onPress={handleExternalLinkPress}>
         <Text style={styles.buttonText}>Ir para Exercício</Text>
       </TouchableOpacity>
@@ -45,13 +44,7 @@ const Student = () => {
         <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} />
         <Text style={styles.whatsappButtonText}>Enviar Mensagem no WhatsApp</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>Voltar a Home</Text>
-        </TouchableOpacity>
     </View>
-
-     
   );
 };
 
@@ -99,9 +92,10 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  iconback:{
+   iconback:{
    position:'absolute',
    top: 10,
+   left:12,
   
   },
 });

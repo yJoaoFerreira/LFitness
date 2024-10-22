@@ -12,6 +12,7 @@
     "react": "18.2.0",
     "react-native": "0.74.5",
     "firebase": "*",
+    "expo-updates": "~0.25.27",
     "@expo/vector-icons": "^14.0.3",
     "@expo/metro-runtime": "~3.2.3",
     "react-native-screens": "3.31.1",

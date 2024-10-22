@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 
 
+
 const ChangePassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');

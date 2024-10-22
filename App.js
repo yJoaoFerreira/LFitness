@@ -39,20 +39,12 @@ const HomeStack = ({ navigation, route }) => {
       <Stack.Screen 
         name="Aluno" 
         component={Student} 
-        
         options={{
-        
-          
-          
           header: () => (
-            
             <Header 
               navigation={navigation}
-               
             />
           ),
-          headerShown:true, headerTransparent:false, headerTitle:"",
-           
         }}
       />
     </Stack.Navigator>
@@ -66,7 +58,7 @@ const SettingsStack = ({ navigation }) => (
       component={Settings} 
       options={{
         header: () => (
-          <Header
+          <Header 
             navigation={navigation} 
           />
         ),
@@ -83,8 +75,7 @@ const TrainingStack = ({ navigation }) => (
       options={{
         header: () => (
           <Header 
-            navigation={navigation}
-            
+            navigation={navigation} 
           />
         ),
       }}
