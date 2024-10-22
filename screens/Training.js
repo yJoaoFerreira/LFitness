@@ -13,7 +13,7 @@ export default function Training({ isHighContrast }) {
   const [treinoCasa, setTreinoCasa] = useState(false);
   const [treinoAcademia, setTreinoAcademia] = useState(false);
 
-  const whatsappNumber = '5521970952662';
+  const whatsappNumber = '5521970952662'; // Número do Fernando
   const message = `Olá, gostaria de mais informações!
   Peso: ${peso}
   Altura: ${altura}
@@ -127,14 +127,20 @@ export default function Training({ isHighContrast }) {
         <CheckBox
           title="Treino em Casa"
           checked={treinoCasa}
-          onPress={() => setTreinoCasa(!treinoCasa)}
+          onPress={() => {
+            setTreinoCasa(!treinoCasa);
+            setTreinoAcademia(false); // Desmarcar "Treino na Academia"
+          }}
           checkedColor={isHighContrast ? '#ddd' : '#25D366'}
           uncheckedColor={isHighContrast ? '#999' : '#ccc'}
         />
         <CheckBox
           title="Treino na Academia"
           checked={treinoAcademia}
-          onPress={() => setTreinoAcademia(!treinoAcademia)}
+          onPress={() => {
+            setTreinoAcademia(!treinoAcademia);
+            setTreinoCasa(false); // Desmarcar "Treino em Casa"
+          }}
           checkedColor={isHighContrast ? '#ddd' : '#25D366'}
           uncheckedColor={isHighContrast ? '#999' : '#ccc'}
         />

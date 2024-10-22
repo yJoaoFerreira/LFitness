@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 const Student = () => {
   const navigation = useNavigation();
@@ -24,6 +25,11 @@ const Student = () => {
 
   return (
     <View style={styles.container}>
+       <View style={styles.iconback}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+           <Ionicons name="arrow-back" size={24} color="black" />
+          </TouchableOpacity>
+       </View>
       <Text style={styles.title}>Área do Aluno</Text>
 
       <TouchableOpacity style={styles.button} onPress={handleExternalLinkPress}>
@@ -85,6 +91,12 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+   iconback:{
+   position:'absolute',
+   top: 10,
+   left:12,
+  
   },
 });
 

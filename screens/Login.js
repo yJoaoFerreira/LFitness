@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -116,43 +116,52 @@ const Login = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator size="large" color="#3498db" />
-      ) : (
-        <>
-          <FlatList
-            data={formData}
-            keyExtractor={(item) => item.label}
-            renderItem={renderFormItem}
-          />
-          
-          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : null}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.formContainer}>
+          {loading ? (
+            <ActivityIndicator size="large" color="#3498db" />
+          ) : (
+            <>
+              <FlatList
+                data={formData}
+                keyExtractor={(item) => item.label}
+                renderItem={renderFormItem}
+              />
+              
+              {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-          <Pressable style={styles.formButton} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Logar</Text>
-          </Pressable>
+              <Pressable style={styles.formButton} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Logar</Text>
+              </Pressable>
 
-          <View style={styles.subContainer}>
-            <Pressable style={styles.subButton} onPress={() => navigation.push('TrocarSenha')}>
-              <Text style={styles.subButtonText}>Esqueci Senha</Text>
-            </Pressable>
-            <Pressable style={styles.subButton} onPress={() => navigation.push('Registrar')}>
-              <Text style={styles.subButtonText}>Novo Usuário</Text>
-            </Pressable>
-          </View>
-        </>
-      )}
-    </View>
+              <View style={styles.subContainer}>
+                <Pressable style={styles.subButton} onPress={() => navigation.push('TrocarSenha')}>
+                  <Text style={styles.subButtonText}>Esqueci Senha</Text>
+                </Pressable>
+                <Pressable style={styles.subButton} onPress={() => navigation.push('Registrar')}>
+                  <Text style={styles.subButtonText}>Novo Usuário</Text>
+                </Pressable>
+              </View>
+            </>
+          )}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
     backgroundColor: '#f8f8f8',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  formContainer: {
+    paddingHorizontal: 20,
   },
   label: {
     paddingVertical: 5,
