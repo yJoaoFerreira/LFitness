@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
 
@@ -97,66 +97,72 @@ export default function Training({ isHighContrast }) {
   };
 
   return (
-    <View style={[styles.container, isHighContrast ? styles.highContrastBackground : null]}>
-      <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>
-        Consultoria Online
-      </Text>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>
+          Consultoria Online
+        </Text>
 
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-      />
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+        />
 
-      {dorArticulacao && (
-        <View style={styles.inputContainer}>
-          <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>
-            Qual dor você sente?
-          </Text>
-          <TextInput
-            style={[styles.input, isHighContrast && styles.inputHighContrast]}
-            placeholder="Descreva a dor"
-            value={tipoDor}
-            onChangeText={setTipoDor}
-            placeholderTextColor={isHighContrast ? '#999' : '#888'}
+        {dorArticulacao && (
+          <View style={styles.inputContainer}>
+            <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>
+              Qual dor você sente?
+            </Text>
+            <TextInput
+              style={[styles.input, isHighContrast && styles.inputHighContrast]}
+              placeholder="Descreva a dor"
+              value={tipoDor}
+              onChangeText={setTipoDor}
+              placeholderTextColor={isHighContrast ? '#999' : '#888'}
+            />
+          </View>
+        )}
+
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            title="Treino em Casa"
+            checked={treinoCasa}
+            onPress={() => {
+              setTreinoCasa(!treinoCasa);
+              setTreinoAcademia(false); // Desmarcar "Treino na Academia"
+            }}
+            checkedColor={isHighContrast ? '#ddd' : '#25D366'}
+            uncheckedColor={isHighContrast ? '#999' : '#ccc'}
+          />
+          <CheckBox
+            title="Treino na Academia"
+            checked={treinoAcademia}
+            onPress={() => {
+              setTreinoAcademia(!treinoAcademia);
+              setTreinoCasa(false); // Desmarcar "Treino em Casa"
+            }}
+            checkedColor={isHighContrast ? '#ddd' : '#25D366'}
+            uncheckedColor={isHighContrast ? '#999' : '#ccc'}
           />
         </View>
-      )}
 
-      <View style={styles.checkboxContainer}>
-        <CheckBox
-          title="Treino em Casa"
-          checked={treinoCasa}
-          onPress={() => {
-            setTreinoCasa(!treinoCasa);
-            setTreinoAcademia(false); // Desmarcar "Treino na Academia"
-          }}
-          checkedColor={isHighContrast ? '#ddd' : '#25D366'}
-          uncheckedColor={isHighContrast ? '#999' : '#ccc'}
-        />
-        <CheckBox
-          title="Treino na Academia"
-          checked={treinoAcademia}
-          onPress={() => {
-            setTreinoAcademia(!treinoAcademia);
-            setTreinoCasa(false); // Desmarcar "Treino em Casa"
-          }}
-          checkedColor={isHighContrast ? '#ddd' : '#25D366'}
-          uncheckedColor={isHighContrast ? '#999' : '#ccc'}
-        />
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
-        <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} />
-        <Text style={styles.buttonText}>Enviar Informações</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
+          <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Enviar Informações</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scrollViewContent: {
     justifyContent: 'center',
     alignItems: 'center',
   },

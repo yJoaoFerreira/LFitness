@@ -1,83 +1,73 @@
-import React, { useState } from 'react';
-import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Firebase from '../firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
-  const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const toggleSenhaVisivel = () => {
-    setSenhaVisivel(!senhaVisivel);
+  // Função para salvar as informações localmente
+  const saveLocalUser = async (email, senha) => {
+    try {
+      const userData = { email, senha };
+      await AsyncStorage.setItem('localUser', JSON.stringify(userData));
+      console.log('Usuário salvo localmente:', userData);
+      navigation.replace('Login'); // Redireciona para login
+    } catch (e) {
+      setError('Erro ao salvar localmente.');
+    }
   };
 
-  const formData = [
-    { label: 'Email:', placeholder: 'Coloque seu E-Mail', value: email, onChange: setEmail, secureTextEntry: false },
-    { 
-      label: 'Senha:', 
-      placeholder: 'Coloque sua Senha', 
-      value: senha, 
-      onChange: setSenha, 
-      secureTextEntry: !senhaVisivel,
-      isPassword: true,
-    },
-    { 
-      label: 'Confirmar Senha:', 
-      placeholder: 'Confirme sua Senha', 
-      value: confirmarSenha, 
-      onChange: setConfirmarSenha, 
-      secureTextEntry: !senhaVisivel,
-      isPassword: true,
+  // Função para sincronizar os dados locais com o Firebase
+  const syncLocalUserToFirebase = async () => {
+    try {
+      const localUser = await AsyncStorage.getItem('localUser');
+      if (localUser !== null) {
+        const { email, senha } = JSON.parse(localUser);
+        const auth = getAuth(Firebase);
+        // Tenta criar o usuário no Firebase usando os dados salvos localmente
+        await createUserWithEmailAndPassword(auth, email, senha);
+        console.log('Dados locais sincronizados com o Firebase.');
+        // Remover os dados locais após a sincronização bem-sucedida
+        await AsyncStorage.removeItem('localUser');
+      }
+    } catch (error) {
+      console.error('Erro ao sincronizar dados com o Firebase:', error);
     }
-  ];
+  };
 
-  const renderFormItem = ({ item }) => (
-    <View style={styles.inputContainer}>
-      <Text style={styles.label}>{item.label}</Text>
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={styles.formInput}
-          placeholder={item.placeholder}
-          value={item.value}
-          secureTextEntry={item.secureTextEntry}
-          onChangeText={item.onChange}
-          autoCapitalize="none"
-          keyboardType={item.secureTextEntry ? 'default' : 'email-address'}
-        />
-        {item.isPassword && (
-          <TouchableOpacity onPress={toggleSenhaVisivel} style={styles.eyeIcon}>
-            <Ionicons name={senhaVisivel ? 'eye-off' : 'eye'} size={24} color="gray" />
-          </TouchableOpacity>
-        )}
-      </View>
-    </View>
-  );
+  // Checar se há dados locais para sincronizar quando o componente monta
+  useEffect(() => {
+    syncLocalUserToFirebase();
+  }, []);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    setError('');
+
     if (senha !== confirmarSenha) {
       setError('As senhas não coincidem.');
       return;
     }
-    
+
     const auth = getAuth(Firebase);
     setLoading(true);
-    createUserWithEmailAndPassword(auth, email, senha)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Usuário registrado:', user);
-        setLoading(false);
-        navigation.replace('Login');
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error.message);
-        console.error('Erro ao registrar:', error);
-      });
+
+    try {
+      // Tentativa de registrar no Firebase
+      await createUserWithEmailAndPassword(auth, email, senha);
+      setLoading(false);
+      navigation.replace('Login'); // Redireciona para login
+    } catch (error) {
+      // Se der erro no Firebase, salva localmente
+      setLoading(false);
+      setError('Firebase não disponível. Salvando localmente...');
+      await saveLocalUser(email, senha); // Chama a função para salvar localmente
+    }
   };
 
   return (
@@ -86,23 +76,43 @@ const Register = ({ navigation }) => {
         <ActivityIndicator size="large" color="#3498db" />
       ) : (
         <>
-          <FlatList
-            data={formData}
-            keyExtractor={(item) => item.label}
-            renderItem={renderFormItem}
+          <Text style={styles.label}>Email:</Text>
+          <TextInput
+            style={styles.formInput}
+            placeholder="Coloque seu E-Mail"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
           />
-          
-          {error ? <Text style={styles.errorText}>{error}</Text> : null} {/* Exibir mensagem de erro */}
+
+          <Text style={styles.label}>Senha:</Text>
+          <TextInput
+            style={styles.formInput}
+            placeholder="Coloque sua Senha"
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry={true}
+          />
+
+          <Text style={styles.label}>Confirmar Senha:</Text>
+          <TextInput
+            style={styles.formInput}
+            placeholder="Confirme sua Senha"
+            value={confirmarSenha}
+            onChangeText={setConfirmarSenha}
+            secureTextEntry={true}
+          />
+
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
           <Pressable style={styles.formButton} onPress={handleRegister}>
             <Text style={styles.buttonText}>Registrar</Text>
           </Pressable>
 
-          <View style={styles.subContainer}>
-            <Pressable style={styles.subButton} onPress={() => navigation.replace('Login')}>
-              <Text style={styles.subButtonText}>Já tenho uma conta</Text>
-            </Pressable>
-          </View>
+          <Pressable style={styles.subButton} onPress={() => navigation.replace('Login')}>
+            <Text style={styles.subButtonText}>Já tenho uma conta</Text>
+          </Pressable>
         </>
       )}
     </View>
@@ -121,45 +131,31 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     color: '#333',
-  },
-  inputContainer: {
-    marginBottom: 15,
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    marginBottom: 10,
   },
   formInput: {
-    flex: 1,
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     backgroundColor: '#fff',
-  },
-  eyeIcon: {
-    marginLeft: 10,
+    marginBottom: 15,
   },
   formButton: {
     backgroundColor: '#3498db',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
-    marginTop: 10,
   },
   buttonText: {
     color: '#fff',
     fontWeight: '700',
     textTransform: 'uppercase',
   },
-  subContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
   subButton: {
-    padding: 10,
+    marginTop: 20,
+    alignItems: 'center',
   },
   subButtonText: {
     fontWeight: '700',
