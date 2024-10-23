@@ -70,17 +70,32 @@ const Login = ({ navigation, route }) => {
     
     if (email.endsWith('@admin.com')) {
       if (email === 'leandro@admin.com' && senha === '123456') {
-        console.log('Login realizado com sucesso via sistema local!');
+        console.log('Login realizado com sucesso via sistema local (Admin)!');
         
         saveCredentials(email, senha);
-
+  
         setTimeout(() => {
           setLoading(false);
           route.params.funcLogar(true);
         }, 2500);
       } else {
         setLoading(false);
-        setError('Usuário ou senha incorretos no sistema local');
+        setError('Usuário ou senha incorretos no sistema local (Admin)');
+      }
+  
+    } else if (email.endsWith('@alunos.com')) {
+      if (email === 'fernando@alunos.com' && senha === '123456') {
+        console.log('Login realizado com sucesso via sistema local (Aluno)!');
+  
+        saveCredentials(email, senha);
+  
+        setTimeout(() => {
+          setLoading(false);
+          route.params.funcLogar(true);
+        }, 2500);
+      } else {
+        setLoading(false);
+        setError('Usuário ou senha incorretos no sistema local (Aluno)');
       }
   
     } else {
@@ -91,7 +106,7 @@ const Login = ({ navigation, route }) => {
           console.log('Usuário autenticado via Firebase:', user);
           
           saveCredentials(email, senha);
-
+  
           setTimeout(() => {
             setLoading(false);
             route.params.funcLogar(true);
