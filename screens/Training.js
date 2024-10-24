@@ -34,6 +34,7 @@ export default function Training() {
       Hipertenso,
       Restricao,
       PreferenciaTreino: TreinoCasa ? 'Casa' : TreinoAcademia ? 'Academia' : 'Não especificado',
+      Link: '',
     };
 
     try {

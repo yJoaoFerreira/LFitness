@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth } from 'firebase/auth';
@@ -18,7 +18,8 @@ const Student = () => {
     TipoDor: '',
     Hipertenso: false,
     Restricao: '',
-    PreferenciaTreino: ''
+    PreferenciaTreino: '',
+    Link: ''
   });
 
   useEffect(() => {
@@ -42,7 +43,8 @@ const Student = () => {
               TipoDor: data.TipoDor || 'N/A',
               Hipertenso: data.Hipertenso || false,
               Restricao: data.Restricao || 'N/A',
-              PreferenciaTreino: data.PreferenciaTreino || 'N/A'
+              PreferenciaTreino: data.PreferenciaTreino || 'N/A',
+              Link: data.Link || ''
             });
           } else {
             console.log('Documento não encontrado.');
@@ -58,6 +60,15 @@ const Student = () => {
 
   const openPhysicalAssessment = () => {
     setModalVisible(true);
+  };
+
+  const handleOpenLink = () => {
+    const { Link } = alunoData;
+    if (Link) {
+      Linking.openURL(Link).catch(err => console.error('Erro ao abrir o link:', err));
+    } else {
+      alert('Link não disponível.');
+    }
   };
 
   return (
@@ -86,12 +97,16 @@ const Student = () => {
             <Text style={styles.modalText}>Peso: {alunoData.Peso}</Text>
             <Text style={styles.modalText}>Altura: {alunoData.Altura}</Text>
             <Text style={styles.modalText}>Dor Articular: {alunoData.DorArticulacao ? 'Sim' : 'Não'}</Text>
-            {alunoData.dorArticulacao && (
+            {alunoData.DorArticulacao && (
               <Text style={styles.modalText}>Tipo de Dor: {alunoData.TipoDor}</Text>
             )}
             <Text style={styles.modalText}>Hipertenso: {alunoData.Hipertenso ? 'Sim' : 'Não'}</Text>
             <Text style={styles.modalText}>Restrições: {alunoData.Restricao}</Text>
             <Text style={styles.modalText}>Preferência de Treino: {alunoData.PreferenciaTreino}</Text>
+
+            <TouchableOpacity style={styles.linkButton} onPress={handleOpenLink}>
+              <Text style={styles.buttonText}>Ver Exercícios</Text>
+            </TouchableOpacity>
 
             <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
               <Text style={styles.buttonText}>Fechar</Text>
@@ -157,6 +172,13 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  linkButton: {
+    backgroundColor: '#007BFF',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
