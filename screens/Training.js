@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
 
@@ -13,7 +14,51 @@ export default function Training({ isHighContrast }) {
   const [treinoCasa, setTreinoCasa] = useState(false);
   const [treinoAcademia, setTreinoAcademia] = useState(false);
 
-  const whatsappNumber = '5521970952662'; // Número do Fernando
+  const whatsappNumber = '5521970952662';
+
+  const storeData = async () => {
+    try {
+      const data = {
+        peso,
+        altura,
+        dorArticulacao,
+        tipoDor,
+        hipertenso,
+        restricao,
+        treinoCasa,
+        treinoAcademia,
+      };
+      await AsyncStorage.setItem('@formData', JSON.stringify(data));
+      console.log('Dados salvos no AsyncStorage');
+    } catch (error) {
+      console.error('Erro ao salvar os dados no AsyncStorage:', error);
+    }
+  };
+
+  const loadData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@formData');
+      if (jsonValue != null) {
+        const savedData = JSON.parse(jsonValue);
+        setPeso(savedData.peso);
+        setAltura(savedData.altura);
+        setDorArticulacao(savedData.dorArticulacao);
+        setTipoDor(savedData.tipoDor);
+        setHipertenso(savedData.hipertenso);
+        setRestricao(savedData.restricao);
+        setTreinoCasa(savedData.treinoCasa);
+        setTreinoAcademia(savedData.treinoAcademia);
+        console.log('Dados carregados do AsyncStorage');
+      }
+    } catch (error) {
+      console.error('Erro ao carregar os dados do AsyncStorage:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const message = `Olá, gostaria de mais informações!
   Peso: ${peso}
   Altura: ${altura}
@@ -24,6 +69,7 @@ export default function Training({ isHighContrast }) {
   Preferência de treino: ${treinoCasa ? 'Casa' : treinoAcademia ? 'Academia' : 'Não especificado'}`;
 
   const handleWhatsAppPress = () => {
+    storeData();
     const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
   };
@@ -130,7 +176,7 @@ export default function Training({ isHighContrast }) {
             checked={treinoCasa}
             onPress={() => {
               setTreinoCasa(!treinoCasa);
-              setTreinoAcademia(false); // Desmarcar "Treino na Academia"
+              setTreinoAcademia(false);
             }}
             checkedColor={isHighContrast ? '#ddd' : '#25D366'}
             uncheckedColor={isHighContrast ? '#999' : '#ccc'}
@@ -140,7 +186,7 @@ export default function Training({ isHighContrast }) {
             checked={treinoAcademia}
             onPress={() => {
               setTreinoAcademia(!treinoAcademia);
-              setTreinoCasa(false); // Desmarcar "Treino em Casa"
+              setTreinoCasa(false);
             }}
             checkedColor={isHighContrast ? '#ddd' : '#25D366'}
             uncheckedColor={isHighContrast ? '#999' : '#ccc'}
