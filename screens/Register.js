@@ -1,45 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import Firebase from '../firebaseConfig';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { doc, setDoc } from "firebase/firestore";
+import { db } from '../firebaseConfig';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [nome, setNome] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const saveLocalUser = async (email, senha) => {
-    try {
-      const userData = { email, senha };
-      await AsyncStorage.setItem('localUser', JSON.stringify(userData));
-      console.log('Usuário salvo localmente:', userData);
-      navigation.replace('Login');
-    } catch (e) {
-      setError('Erro ao salvar localmente.');
-    }
-  };
-
-  const syncLocalUserToFirebase = async () => {
-    try {
-      const localUser = await AsyncStorage.getItem('localUser');
-      if (localUser !== null) {
-        const { email, senha } = JSON.parse(localUser);
-        const auth = getAuth(Firebase);
-        await createUserWithEmailAndPassword(auth, email, senha);
-        console.log('Dados locais sincronizados com o Firebase.');
-        await AsyncStorage.removeItem('localUser');
-      }
-    } catch (error) {
-      console.error('Erro ao sincronizar dados com o Firebase:', error);
-    }
-  };
-
-  useEffect(() => {
-    syncLocalUserToFirebase();
-  }, []);
 
   const handleRegister = async () => {
     setError('');
@@ -49,17 +20,29 @@ const Register = ({ navigation }) => {
       return;
     }
 
-    const auth = getAuth(Firebase);
+    if (!nome) {
+      setError('O campo nome é obrigatório.');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      await createUserWithEmailAndPassword(auth, email, senha);
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+
+      const userEmail = userCredential.user.email;
+
+      await setDoc(doc(db, 'Alunos', userEmail), {
+        Nome: nome,
+      });
+
       setLoading(false);
       navigation.replace('Login');
     } catch (error) {
       setLoading(false);
-      setError('Firebase não disponível. Salvando localmente...');
-      await saveLocalUser(email, senha);
+      setError('Erro ao registrar o usuário. Tente novamente.');
+      console.error('Erro ao registrar:', error);
     }
   };
 
@@ -71,10 +54,18 @@ const Register = ({ navigation }) => {
         <ActivityIndicator size="large" color="#3498db" />
       ) : (
         <>
+          <Text style={styles.label}>Nome:</Text>
+          <TextInput
+            style={styles.formInput}
+            placeholder="Digite seu Nome"
+            value={nome}
+            onChangeText={setNome}
+          />
+
           <Text style={styles.label}>Email:</Text>
           <TextInput
             style={styles.formInput}
-            placeholder="Coloque seu E-Mail"
+            placeholder="Digite seu E-Mail"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
@@ -84,7 +75,7 @@ const Register = ({ navigation }) => {
           <Text style={styles.label}>Senha:</Text>
           <TextInput
             style={styles.formInput}
-            placeholder="Coloque sua Senha"
+            placeholder="Digite sua Senha"
             value={senha}
             onChangeText={setSenha}
             secureTextEntry={true}
