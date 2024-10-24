@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import Firebase from '../firebaseConfig';
 
@@ -28,6 +28,8 @@ const ChangePassword = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/logo.png')} style={styles.logo} />
+
       {loading ? (
         <ActivityIndicator size="large" color="#3498db" />
       ) : (
@@ -105,6 +107,12 @@ const styles = StyleSheet.create({
     color: 'red',
     marginVertical: 10,
     fontWeight: 'bold',
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   successText: {
     color: 'green',

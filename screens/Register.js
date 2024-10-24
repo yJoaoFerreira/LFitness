@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Firebase from '../firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,29 +11,25 @@ const Register = ({ navigation }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Função para salvar as informações localmente
   const saveLocalUser = async (email, senha) => {
     try {
       const userData = { email, senha };
       await AsyncStorage.setItem('localUser', JSON.stringify(userData));
       console.log('Usuário salvo localmente:', userData);
-      navigation.replace('Login'); // Redireciona para login
+      navigation.replace('Login');
     } catch (e) {
       setError('Erro ao salvar localmente.');
     }
   };
 
-  // Função para sincronizar os dados locais com o Firebase
   const syncLocalUserToFirebase = async () => {
     try {
       const localUser = await AsyncStorage.getItem('localUser');
       if (localUser !== null) {
         const { email, senha } = JSON.parse(localUser);
         const auth = getAuth(Firebase);
-        // Tenta criar o usuário no Firebase usando os dados salvos localmente
         await createUserWithEmailAndPassword(auth, email, senha);
         console.log('Dados locais sincronizados com o Firebase.');
-        // Remover os dados locais após a sincronização bem-sucedida
         await AsyncStorage.removeItem('localUser');
       }
     } catch (error) {
@@ -41,7 +37,6 @@ const Register = ({ navigation }) => {
     }
   };
 
-  // Checar se há dados locais para sincronizar quando o componente monta
   useEffect(() => {
     syncLocalUserToFirebase();
   }, []);
@@ -58,20 +53,20 @@ const Register = ({ navigation }) => {
     setLoading(true);
 
     try {
-      // Tentativa de registrar no Firebase
       await createUserWithEmailAndPassword(auth, email, senha);
       setLoading(false);
-      navigation.replace('Login'); // Redireciona para login
+      navigation.replace('Login');
     } catch (error) {
-      // Se der erro no Firebase, salva localmente
       setLoading(false);
       setError('Firebase não disponível. Salvando localmente...');
-      await saveLocalUser(email, senha); // Chama a função para salvar localmente
+      await saveLocalUser(email, senha);
     }
   };
 
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/logo.png')} style={styles.logo} />
+
       {loading ? (
         <ActivityIndicator size="large" color="#3498db" />
       ) : (
@@ -161,6 +156,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     color: '#3498db',
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   errorText: {
     color: 'red',

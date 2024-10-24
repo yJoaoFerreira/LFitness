@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -134,6 +134,8 @@ const Login = ({ navigation, route }) => {
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : null}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.formContainer}>
+          <Image source={require('../assets/logo.png')} style={styles.logo} />
+
           {loading ? (
             <ActivityIndicator size="large" color="#3498db" />
           ) : (
@@ -177,6 +179,12 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     paddingHorizontal: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   label: {
     paddingVertical: 5,
