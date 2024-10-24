@@ -18,8 +18,8 @@ export default function Training() {
 
   const auth = getAuth();
   const user = auth.currentUser;
-  const whatsappNumber = '5521970952662';
-
+  const whatsappNumber = '5521993507026';
+  
   const handleSaveToFirestore = async () => {
     if (!user) {
       console.error('Usuário não está logado');
@@ -46,14 +46,14 @@ export default function Training() {
   };
 
   const handleWhatsAppMessage = () => {
-    const message = `Olá, gostaria de mais informações!
-    Peso: ${Peso}
-    Altura: ${Altura}
-    Sente dor nas articulações? ${DorArticulacao ? 'Sim' : 'Não'}
-    ${DorArticulacao ? `Tipo de dor: ${TipoDor}` : ''}
-    Hipertenso? ${Hipertenso ? 'Sim' : 'Não'}
-    Restrição: ${Restricao}
-    Preferência de treino: ${TreinoCasa ? 'Casa' : TreinoAcademia ? 'Academia' : 'Não especificado'}`;
+    const message = `Olá, gostaria de mais informações!\n\n +
+    Meu peso: ${Peso}\n\n +
+    Minha altura: ${Altura}\n\n +
+    Eu sinto desconforto nas articulações? ${DorArticulacao ? 'Sim' : 'Não'}\n\n +
+    ${DorArticulacao ? `Descrição do desconforto que sinto: ${TipoDor}` : ''}\n\n +
+    Tenho histórico de hipertensão arterial? ${Hipertenso ? 'Sim' : 'Não'}\n\n +
+    Tenho alguma restrição em minhas atividades físicas? ${Restricao}\n\n +
+    Minha preferência de treino: ${TreinoCasa ? 'Casa' : TreinoAcademia ? 'Academia' : 'Não especificado'}\n\n`;
 
     const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
