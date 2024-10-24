@@ -1,77 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
+import { getAuth } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
-export default function Training({ isHighContrast }) {
-  const [peso, setPeso] = useState('');
-  const [altura, setAltura] = useState('');
-  const [dorArticulacao, setDorArticulacao] = useState(false);
-  const [tipoDor, setTipoDor] = useState('');
-  const [hipertenso, setHipertenso] = useState(false);
-  const [restricao, setRestricao] = useState('');
-  const [treinoCasa, setTreinoCasa] = useState(false);
-  const [treinoAcademia, setTreinoAcademia] = useState(false);
+export default function Training() {
+  const [Peso, setPeso] = useState('');
+  const [Altura, setAltura] = useState('');
+  const [DorArticulacao, setDorArticulacao] = useState(false);
+  const [TipoDor, setTipoDor] = useState('');
+  const [Hipertenso, setHipertenso] = useState(false);
+  const [Restricao, setRestricao] = useState('');
+  const [TreinoCasa, setTreinoCasa] = useState(false);
+  const [TreinoAcademia, setTreinoAcademia] = useState(false);
 
+  const auth = getAuth();
+  const user = auth.currentUser;
   const whatsappNumber = '5521970952662';
 
-  const storeData = async () => {
+  const handleSaveToFirestore = async () => {
+    if (!user) {
+      console.error('Usuário não está logado');
+      return;
+    }
+
+    const alunoData = {
+      Peso,
+      Altura,
+      DorArticulacao,
+      TipoDor: DorArticulacao ? TipoDor : '',
+      Hipertenso,
+      Restricao,
+      PreferenciaTreino: TreinoCasa ? 'Casa' : TreinoAcademia ? 'Academia' : 'Não especificado',
+    };
+
     try {
-      const data = {
-        peso,
-        altura,
-        dorArticulacao,
-        tipoDor,
-        hipertenso,
-        restricao,
-        treinoCasa,
-        treinoAcademia,
-      };
-      await AsyncStorage.setItem('@formData', JSON.stringify(data));
-      console.log('Dados salvos no AsyncStorage');
+      await setDoc(doc(db, 'Alunos', user.email), alunoData, { merge: true });
+      console.log('Dados salvos com sucesso!');
     } catch (error) {
-      console.error('Erro ao salvar os dados no AsyncStorage:', error);
+      console.error('Erro ao salvar dados no Firestore:', error);
     }
   };
 
-  const loadData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@formData');
-      if (jsonValue != null) {
-        const savedData = JSON.parse(jsonValue);
-        setPeso(savedData.peso);
-        setAltura(savedData.altura);
-        setDorArticulacao(savedData.dorArticulacao);
-        setTipoDor(savedData.tipoDor);
-        setHipertenso(savedData.hipertenso);
-        setRestricao(savedData.restricao);
-        setTreinoCasa(savedData.treinoCasa);
-        setTreinoAcademia(savedData.treinoAcademia);
-        console.log('Dados carregados do AsyncStorage');
-      }
-    } catch (error) {
-      console.error('Erro ao carregar os dados do AsyncStorage:', error);
-    }
-  };
+  const handleWhatsAppMessage = () => {
+    const message = `Olá, gostaria de mais informações!
+    Peso: ${Peso}
+    Altura: ${Altura}
+    Sente dor nas articulações? ${DorArticulacao ? 'Sim' : 'Não'}
+    ${DorArticulacao ? `Tipo de dor: ${TipoDor}` : ''}
+    Hipertenso? ${Hipertenso ? 'Sim' : 'Não'}
+    Restrição: ${Restricao}
+    Preferência de treino: ${TreinoCasa ? 'Casa' : TreinoAcademia ? 'Academia' : 'Não especificado'}`;
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const message = `Olá, gostaria de mais informações!
-  Peso: ${peso}
-  Altura: ${altura}
-  Sente dor nas articulações? ${dorArticulacao ? 'Sim' : 'Não'}
-  ${dorArticulacao ? `Tipo de dor: ${tipoDor}` : ''}
-  Hipertenso? ${hipertenso ? 'Sim' : 'Não'}
-  Restrição: ${restricao}
-  Preferência de treino: ${treinoCasa ? 'Casa' : treinoAcademia ? 'Academia' : 'Não especificado'}`;
-
-  const handleWhatsAppPress = () => {
-    storeData();
     const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
+  };
+
+  const handleSaveAndSendMessage = async () => {
+    await handleSaveToFirestore();
+    handleWhatsAppMessage();
   };
 
   const data = [
@@ -79,7 +68,7 @@ export default function Training({ isHighContrast }) {
       key: 'peso',
       label: 'Peso (kg):',
       placeholder: 'Peso (kg)',
-      value: peso,
+      value: Peso,
       onChangeText: setPeso,
       type: 'input',
     },
@@ -87,21 +76,21 @@ export default function Training({ isHighContrast }) {
       key: 'altura',
       label: 'Altura (cm):',
       placeholder: 'Altura (cm)',
-      value: altura,
+      value: Altura,
       onChangeText: setAltura,
       type: 'input',
     },
     {
       key: 'dorArticulacao',
       label: 'Sente dor nas articulações?',
-      value: dorArticulacao,
+      value: DorArticulacao,
       onValueChange: setDorArticulacao,
       type: 'switch',
     },
     {
       key: 'hipertenso',
       label: 'Hipertenso?',
-      value: hipertenso,
+      value: Hipertenso,
       onValueChange: setHipertenso,
       type: 'switch',
     },
@@ -109,7 +98,7 @@ export default function Training({ isHighContrast }) {
       key: 'restricao',
       label: 'Tem alguma restrição?',
       placeholder: 'Restrições',
-      value: restricao,
+      value: Restricao,
       onChangeText: setRestricao,
       type: 'input',
     },
@@ -119,21 +108,21 @@ export default function Training({ isHighContrast }) {
     if (item.type === 'input') {
       return (
         <View style={styles.inputContainer}>
-          <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>{item.label}</Text>
+          <Text style={styles.label}>{item.label}</Text>
           <TextInput
-            style={[styles.input, isHighContrast && styles.inputHighContrast]}
+            style={styles.input}
             placeholder={item.placeholder}
             keyboardType="numeric"
             value={item.value}
             onChangeText={item.onChangeText}
-            placeholderTextColor={isHighContrast ? '#999' : '#888'}
+            placeholderTextColor="#888"
           />
         </View>
       );
     } else if (item.type === 'switch') {
       return (
         <View style={styles.switchContainer}>
-          <Text style={[styles.switchLabel, isHighContrast && styles.labelHighContrast]}>
+          <Text style={styles.switchLabel}>
             {item.label}
           </Text>
           <Switch value={item.value} onValueChange={item.onValueChange} />
@@ -145,7 +134,7 @@ export default function Training({ isHighContrast }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={[styles.title, isHighContrast && styles.titleHighContrast]}>
+        <Text style={styles.title}>
           Consultoria Online
         </Text>
 
@@ -155,17 +144,17 @@ export default function Training({ isHighContrast }) {
           keyExtractor={(item) => item.key}
         />
 
-        {dorArticulacao && (
+        {DorArticulacao && (
           <View style={styles.inputContainer}>
-            <Text style={[styles.label, isHighContrast && styles.labelHighContrast]}>
+            <Text style={styles.label}>
               Qual dor você sente?
             </Text>
             <TextInput
-              style={[styles.input, isHighContrast && styles.inputHighContrast]}
+              style={styles.input}
               placeholder="Descreva a dor"
-              value={tipoDor}
+              value={TipoDor}
               onChangeText={setTipoDor}
-              placeholderTextColor={isHighContrast ? '#999' : '#888'}
+              placeholderTextColor="#888"
             />
           </View>
         )}
@@ -173,29 +162,29 @@ export default function Training({ isHighContrast }) {
         <View style={styles.checkboxContainer}>
           <CheckBox
             title="Treino em Casa"
-            checked={treinoCasa}
+            checked={TreinoCasa}
             onPress={() => {
-              setTreinoCasa(!treinoCasa);
+              setTreinoCasa(!TreinoCasa);
               setTreinoAcademia(false);
             }}
-            checkedColor={isHighContrast ? '#ddd' : '#25D366'}
-            uncheckedColor={isHighContrast ? '#999' : '#ccc'}
+            checkedColor="#25D366"
+            uncheckedColor="#ccc"
           />
           <CheckBox
             title="Treino na Academia"
-            checked={treinoAcademia}
+            checked={TreinoAcademia}
             onPress={() => {
-              setTreinoAcademia(!treinoAcademia);
+              setTreinoAcademia(!TreinoAcademia);
               setTreinoCasa(false);
             }}
-            checkedColor={isHighContrast ? '#ddd' : '#25D366'}
-            uncheckedColor={isHighContrast ? '#999' : '#ccc'}
+            checkedColor="#25D366"
+            uncheckedColor="#ccc"
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleWhatsAppPress}>
-          <Icon name="whatsapp" size={20} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>Enviar Informações</Text>
+        <TouchableOpacity style={styles.button} onPress={handleSaveAndSendMessage}>
+          <Icon name="save" size={20} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Salvar Dados e Enviar WhatsApp</Text>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -204,79 +193,61 @@ export default function Training({ isHighContrast }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   scrollViewContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  highContrastBackground: {
-    backgroundColor: '#000',
+    paddingBottom: 20,
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
     textAlign: 'center',
-    color: '#34495e',
-  },
-  titleHighContrast: {
-    color: '#ddd',
+    marginBottom: 20,
   },
   inputContainer: {
-    width: '100%',
-    marginVertical: 10,
+    marginBottom: 15,
   },
   label: {
     fontSize: 16,
-    color: '#34495e',
-  },
-  labelHighContrast: {
-    color: '#ddd',
+    marginBottom: 5,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 10,
     borderRadius: 5,
-    backgroundColor: '#fff',
-    color: '#34495e',
-    width: '100%',
-  },
-  inputHighContrast: {
-    borderColor: '#555',
-    backgroundColor: '#333',
-    color: '#ddd',
+    padding: 10,
+    fontSize: 16,
   },
   switchContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   switchLabel: {
     fontSize: 16,
-    color: '#34495e',
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
   },
   button: {
-    marginTop: 20,
+    backgroundColor: '#25D366',
     padding: 15,
     borderRadius: 5,
-    backgroundColor: '#25D366',
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
     marginLeft: 10,
   },
   icon: {
     marginRight: 10,
-  },
-  checkboxContainer: {
-    width: '100%',
-    marginVertical: 10,
   },
 });
