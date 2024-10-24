@@ -13,7 +13,6 @@ import Student from './screens/Student';
 import Home from './screens/Home';
 import Header from './components/Header';
 import Loading from './components/Loading';
-import PhysicalAssessment from './screens/PhysicalAssessment';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -98,22 +97,6 @@ const AboutStack = ({ navigation }) => (
   </Stack.Navigator>
 );
 
-const PhysicalAssessmentStack = ({ navigation }) => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Avaliação Física"
-      component={PhysicalAssessment}
-      options={{
-        header: () => (
-          <Header
-            navigation={navigation}
-          />
-        ),
-      }}
-    />
-  </Stack.Navigator>
-);
-
 const DrawerNav = ({ funcLogar }) => (
   <Drawer.Navigator>
     <Drawer.Screen 
@@ -134,11 +117,6 @@ const DrawerNav = ({ funcLogar }) => (
     <Drawer.Screen 
       name="Sobre Mim" 
       component={AboutStack}  
-      options={{ headerShown: false }} 
-    />
-    <Drawer.Screen 
-      name="Avaliação Física" 
-      component={PhysicalAssessmentStack}  
       options={{ headerShown: false }} 
     />
   </Drawer.Navigator>

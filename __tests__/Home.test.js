@@ -14,29 +14,28 @@ describe('Home Component', () => {
     jest.clearAllMocks();
   });
 
-  test('renders correctly', () => {
+  test('renderiza corretamente', () => {
     const { getByText } = render(<Home navigation={mockNavigation} route={{ params: { funcLogar: mockFuncLogar } }} />);
     
-    // Verifica se o título e os botões estão renderizados corretamente
     expect(getByText(/Bem-vindo à Home!/i)).toBeTruthy();
     expect(getByText(/Ir para Alunos/i)).toBeTruthy();
     expect(getByText(/Logout/i)).toBeTruthy();
   });
 
-  test('navigates to Alunos when button is pressed', () => {
+  test('navega para Alunos quando o botão é pressionado', () => {
     const { getByText } = render(<Home navigation={mockNavigation} route={{ params: { funcLogar: mockFuncLogar } }} />);
     
     fireEvent.press(getByText(/Ir para Alunos/i));
     
-    expect(mockNavigation.navigate).toHaveBeenCalledWith('Aluno'); // Verifica se a navegação para Aluno foi chamada
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('Aluno');
   });
 
-  test('calls funcLogar and navigates to Login when Logout button is pressed', () => {
+  test('chama função de Logar e navega para Login quando o botão Logout é pressionado', () => {
     const { getByText } = render(<Home navigation={mockNavigation} route={{ params: { funcLogar: mockFuncLogar } }} />);
     
     fireEvent.press(getByText(/Logout/i));
     
-    expect(mockFuncLogar).toHaveBeenCalledWith(false); // Verifica se funcLogar foi chamado com false
-    expect(mockNavigation.replace).toHaveBeenCalledWith('Login'); // Verifica se a navegação para Login foi chamada
+    expect(mockFuncLogar).toHaveBeenCalledWith(false);
+    expect(mockNavigation.replace).toHaveBeenCalledWith('Login');
   });
 });

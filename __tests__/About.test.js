@@ -2,20 +2,20 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import About from '../screens/About';
 
-describe('About Screen', () => {
-  test('renders the title', () => {
+describe('tela Sobre', () => {
+  test('renderiza o título', () => {
     const { getByText } = render(<About />);
     const titleElement = getByText(/O QUE É A LFITNESS?/i);
-    expect(titleElement).toBeTruthy(); // Verifica se o título está na tela
+    expect(titleElement).toBeTruthy();
   });
 
-  test('renders the name', () => {
+  test('renderiza o nome', () => {
     const { getByText } = render(<About />);
     const nameElement = getByText(/Leandro Coimbra/i);
-    expect(nameElement).toBeTruthy(); // Verifica se o nome está na tela
+    expect(nameElement).toBeTruthy();
   });
 
-  test('renders the description texts', () => {
+  test('renderiza os textos de descrição', () => {
     const { getAllByText } = render(<About />);
     const descriptionTexts = [
       /Com mais de 12 anos de experiência no mercado/i,
@@ -25,7 +25,7 @@ describe('About Screen', () => {
     
     descriptionTexts.forEach(text => {
       const descriptionElement = getAllByText(text);
-      expect(descriptionElement.length).toBeGreaterThan(0); // Verifica se cada descrição está na tela
+      expect(descriptionElement.length).toBeGreaterThan(0);
     });
   });
 });

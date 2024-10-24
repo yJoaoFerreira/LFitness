@@ -3,23 +3,21 @@ import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import ChangePassword from '../screens/ChangePassword';
 import { sendPasswordResetEmail } from 'firebase/auth';
 
-// Mock do Firebase e da função de redefinição de senha
 jest.mock('firebase/auth', () => ({
   getAuth: jest.fn(),
   sendPasswordResetEmail: jest.fn(),
 }));
 
-// Mock do Firebase para evitar erros
 jest.mock('../firebaseConfig', () => jest.fn());
 
-describe('ChangePassword Component', () => {
+describe('Componente ChangePassword', () => {
   const mockNavigation = { replace: jest.fn() };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('renders correctly', () => {
+  test('renderiza corretamente', () => {
     const { getByText } = render(<ChangePassword navigation={mockNavigation} />);
     
     expect(getByText(/Digite seu email para trocar a senha:/i)).toBeTruthy();
@@ -27,8 +25,8 @@ describe('ChangePassword Component', () => {
     expect(getByText(/Voltar para Login/i)).toBeTruthy();
   });
 
-  test('shows success message on successful email send', async () => {
-    sendPasswordResetEmail.mockResolvedValueOnce(); // Simula sucesso ao enviar o email
+  test('mostra mensagem de sucesso no envio de email bem-sucedido', async () => {
+    sendPasswordResetEmail.mockResolvedValueOnce();
     const { getByText, getByPlaceholderText } = render(<ChangePassword navigation={mockNavigation} />);
 
     fireEvent.changeText(getByPlaceholderText(/Coloque seu E-Mail/i), 'test@example.com');
@@ -39,24 +37,24 @@ describe('ChangePassword Component', () => {
     });
   });
 
-  test('shows error message on failed email send', async () => {
+  test('mostra mensagem de erro em caso de falha no envio de e-mail', async () => {
     const errorMessage = 'Error: Email não encontrado.';
-    sendPasswordResetEmail.mockRejectedValueOnce(new Error(errorMessage)); // Simula falha ao enviar o email
+    sendPasswordResetEmail.mockRejectedValueOnce(new Error(errorMessage));
     const { getByText, getByPlaceholderText } = render(<ChangePassword navigation={mockNavigation} />);
 
     fireEvent.changeText(getByPlaceholderText(/Coloque seu E-Mail/i), 'test@example.com');
     fireEvent.press(getByText(/Enviar Email/i));
 
     await waitFor(() => {
-      expect(getByText(errorMessage)).toBeTruthy(); // Verifica se a mensagem de erro está visível
+      expect(getByText(errorMessage)).toBeTruthy();
     });
   });
 
-  test('navigates to Login screen when "Voltar para Login" is pressed', () => {
+  test('navega para a tela de Login quando "Voltar para Login" é pressionado', () => {
     const { getByText } = render(<ChangePassword navigation={mockNavigation} />);
 
     fireEvent.press(getByText(/Voltar para Login/i));
 
-    expect(mockNavigation.replace).toHaveBeenCalledWith('Login'); // Verifica se a navegação para Login foi chamada
+    expect(mockNavigation.replace).toHaveBeenCalledWith('Login');
   });
 });
