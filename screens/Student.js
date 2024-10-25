@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db } from '../config/firebaseConfig';
 
 const Student = () => {
   const navigation = useNavigation();
@@ -63,8 +63,11 @@ const Student = () => {
   };
 
   const handleOpenLink = () => {
-    const { Link } = alunoData;
+    let { Link } = alunoData;
     if (Link) {
+      if (!Link.startsWith('http://') && !Link.startsWith('https://')) {
+        Link = `http://${Link}`;
+      }
       Linking.openURL(Link).catch(err => console.error('Erro ao abrir o link:', err));
     } else {
       alert('Link não disponível.');
@@ -94,8 +97,8 @@ const Student = () => {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Avaliação Física</Text>
             <Text style={styles.modalText}>Nome: {alunoData.Nome}</Text>
-            <Text style={styles.modalText}>Peso: {alunoData.Peso}</Text>
-            <Text style={styles.modalText}>Altura: {alunoData.Altura}</Text>
+            <Text style={styles.modalText}>Peso: {alunoData.Peso} kg</Text>
+            <Text style={styles.modalText}>Altura: {alunoData.Altura} cm</Text>
             <Text style={styles.modalText}>Dor Articular: {alunoData.DorArticulacao ? 'Sim' : 'Não'}</Text>
             {alunoData.DorArticulacao && (
               <Text style={styles.modalText}>Tipo de Dor: {alunoData.TipoDor}</Text>

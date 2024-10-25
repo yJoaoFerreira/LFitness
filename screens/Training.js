@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
 import { getAuth } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db } from '../config/firebaseConfig';
 
 export default function Training() {
   const [Peso, setPeso] = useState('');
@@ -46,14 +46,15 @@ export default function Training() {
   };
 
   const handleWhatsAppMessage = () => {
-    const message = `Olá, gostaria de mais informações!\n\n +
-    Meu peso: ${Peso}\n\n +
-    Minha altura: ${Altura}\n\n +
-    Eu sinto desconforto nas articulações? ${DorArticulacao ? 'Sim' : 'Não'}\n\n +
-    ${DorArticulacao ? `Descrição do desconforto que sinto: ${TipoDor}` : ''}\n\n +
-    Tenho histórico de hipertensão arterial? ${Hipertenso ? 'Sim' : 'Não'}\n\n +
-    Tenho alguma restrição em minhas atividades físicas? ${Restricao}\n\n +
-    Minha preferência de treino: ${TreinoCasa ? 'Casa' : TreinoAcademia ? 'Academia' : 'Não especificado'}\n\n`;
+    const message = `Olá, gostaria de treinar sendo orientado e supervisionado por você! Aqui estão os meus dados:\n\n` +
+    `*Peso:* ${Peso} kg\n\n` +
+    `*Altura:* ${Altura} cm\n\n` +
+    `*Desconforto nas articulações:* ${DorArticulacao ? 'Sim' : 'Não'}\n\n` +
+    `${DorArticulacao ? `*Descrição do desconforto:* ${TipoDor}\n\n` : ''}` +
+    `*Histórico de hipertensão arterial:* ${Hipertenso ? 'Sim' : 'Não'}\n\n` +
+    `*Restrições em atividades físicas:* ${Restricao || 'Nenhuma'}\n\n` +
+    `*Preferência de treino:* ${TreinoCasa ? 'Treino em Casa' : TreinoAcademia ? 'Treino na Academia' : 'Não especificado'}\n\n` +
+    `Agradeço pela atenção!`;
 
     const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));

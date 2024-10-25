@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from '../firebaseConfig';
+import { db } from '../config/firebaseConfig';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
