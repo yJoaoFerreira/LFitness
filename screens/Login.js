@@ -3,7 +3,7 @@ import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacit
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Firebase from '../config/firebaseConfig';
+import Firebase from '../services/firebaseConfig';
 
 const Login = ({ navigation, route }) => {
   const [email, setEmail] = useState('');

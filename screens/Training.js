@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
 import { getAuth } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../config/firebaseConfig';
+import { db } from '../services/firebaseConfig';
 
 export default function Training() {
   const [Peso, setPeso] = useState('');
