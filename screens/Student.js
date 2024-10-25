@@ -8,7 +8,6 @@ import { db } from '../services/firebaseConfig';
 
 const Student = () => {
   const navigation = useNavigation();
-
   const [modalVisible, setModalVisible] = useState(false);
   const [alunoData, setAlunoData] = useState({
     Nome: '',
@@ -136,14 +135,14 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#A0BAB7',
     padding: 15,
     marginVertical: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -155,35 +154,37 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     padding: 20,
-    margin: 30,
-    borderRadius: 10,
+    marginHorizontal: 30,
+    borderRadius: 15,
   },
   modalTitle: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center',
+    color: '#333',
   },
   modalText: {
     fontSize: 18,
     marginBottom: 10,
+    color: '#555',
   },
   closeButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#7A918E',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
   },
   linkButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#A0BAB7',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
   },

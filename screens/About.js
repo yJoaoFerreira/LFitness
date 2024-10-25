@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1a1a1a',
   },
   title: {
     fontSize: 32,
-    color: '#2c3e50',
+    color: '#ffffff',
     marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -58,14 +58,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 26,
-    color: '#2c3e50',
+    color: '#25D366',
     marginBottom: 10,
     textAlign: 'center',
     fontStyle: 'italic',
   },
   description: {
     fontSize: 18,
-    color: '#34495e',
+    color: '#aaaaaa',
     marginVertical: 10,
     textAlign: 'center',
     paddingHorizontal: 10,

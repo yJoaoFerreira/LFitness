@@ -171,7 +171,7 @@ const Login = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#f0f8ff',
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#333',
+    color: '#0d1f2d',
   },
   inputContainer: {
     marginBottom: 15,
@@ -206,13 +206,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
   eyeIcon: {
     marginLeft: 10,
   },
   formButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#1a73e8',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -234,10 +234,10 @@ const styles = StyleSheet.create({
   subButtonText: {
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#3498db',
+    color: '#1a73e8',
   },
   errorText: {
-    color: 'red',
+    color: '#d9534f',
     marginVertical: 10,
     fontWeight: 'bold',
   },

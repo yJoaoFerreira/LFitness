@@ -32,11 +32,11 @@ const Home = ({ navigation, route }) => {
         )}
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Aluno")}>
-          <Text style={styles.buttonText}>Ir para Alunos</Text>
+          <Text style={styles.buttonText}>Área de Alunos</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={deslogar}>
-          <Text style={styles.buttonText}>Logout</Text>
+          <Text style={styles.buttonText}>Deslogar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -46,7 +46,7 @@ const Home = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#DEDAD1',
   },
   content: {
     flex: 1,
@@ -58,27 +58,30 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: '#333',
+    color: '#4A6865',
   },
   quoteContainer: {
     marginBottom: 30,
     paddingHorizontal: 20,
     alignItems: 'center',
+    backgroundColor: '#A0BAB7',
+    paddingVertical: 10,
+    borderRadius: 8,
   },
   quoteText: {
     fontSize: 20,
     fontStyle: 'italic',
-    color: '#555',
+    color: '#333333',
     textAlign: 'center',
   },
   quoteAuthor: {
     fontSize: 15,
-    color: '#777',
+    color: '#777777',
     marginTop: 5,
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#A0BAB7',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   logoutButton: {
-    backgroundColor: '#FF4C4C',
+    backgroundColor: '#7A918E',
   },
 });
 

@@ -51,7 +51,7 @@ const Register = ({ navigation }) => {
       <Image source={require('../assets/logo.png')} style={styles.logo} />
 
       {loading ? (
-        <ActivityIndicator size="large" color="#3498db" />
+        <ActivityIndicator size="large" color="#4A90E2" />
       ) : (
         <>
           <Text style={styles.label}>Nome:</Text>
@@ -110,32 +110,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#FFFFFF',
   },
   label: {
     paddingVertical: 5,
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#333',
+    color: '#333333',
     marginBottom: 10,
   },
   formInput: {
     height: 40,
-    borderColor: '#ccc',
+    borderColor: '#CCCCCC',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     marginBottom: 15,
   },
   formButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#4A90E2',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontWeight: '700',
     textTransform: 'uppercase',
   },
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   subButtonText: {
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#3498db',
+    color: '#4A90E2',
   },
   logo: {
     width: 150,
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   errorText: {
-    color: 'red',
+    color: '#D0021B',
     marginVertical: 10,
     fontWeight: 'bold',
   },

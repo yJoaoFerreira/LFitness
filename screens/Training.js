@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking, FlatList, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import {
+  Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking,
+  FlatList, KeyboardAvoidingView, Platform, ScrollView
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
 import { getAuth } from 'firebase/auth';
@@ -19,7 +22,7 @@ export default function Training() {
   const auth = getAuth();
   const user = auth.currentUser;
   const whatsappNumber = '5521993507026';
-  
+
   const handleSaveToFirestore = async () => {
     if (!user) {
       console.error('Usuário não está logado');
@@ -47,14 +50,14 @@ export default function Training() {
 
   const handleWhatsAppMessage = () => {
     const message = `Olá, gostaria de treinar sendo orientado e supervisionado por você! Aqui estão os meus dados:\n\n` +
-    `*Peso:* ${Peso} kg\n\n` +
-    `*Altura:* ${Altura} cm\n\n` +
-    `*Desconforto nas articulações:* ${DorArticulacao ? 'Sim' : 'Não'}\n\n` +
-    `${DorArticulacao ? `*Descrição do desconforto:* ${TipoDor}\n\n` : ''}` +
-    `*Histórico de hipertensão arterial:* ${Hipertenso ? 'Sim' : 'Não'}\n\n` +
-    `*Restrições em atividades físicas:* ${Restricao || 'Nenhuma'}\n\n` +
-    `*Preferência de treino:* ${TreinoCasa ? 'Treino em Casa' : TreinoAcademia ? 'Treino na Academia' : 'Não especificado'}\n\n` +
-    `Agradeço pela atenção!`;
+      `*Peso:* ${Peso} kg\n\n` +
+      `*Altura:* ${Altura} cm\n\n` +
+      `*Desconforto nas articulações:* ${DorArticulacao ? 'Sim' : 'Não'}\n\n` +
+      `${DorArticulacao ? `*Descrição do desconforto:* ${TipoDor}\n\n` : ''}` +
+      `*Histórico de hipertensão arterial:* ${Hipertenso ? 'Sim' : 'Não'}\n\n` +
+      `*Restrições em atividades físicas:* ${Restricao || 'Nenhuma'}\n\n` +
+      `*Preferência de treino:* ${TreinoCasa ? 'Treino em Casa' : TreinoAcademia ? 'Treino na Academia' : 'Não especificado'}\n\n` +
+      `Agradeço pela atenção!`;
 
     const url = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
     Linking.openURL(url).catch(err => console.error('Erro ao abrir o WhatsApp', err));
@@ -136,9 +139,7 @@ export default function Training() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : null}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.title}>
-          Consultoria Online
-        </Text>
+        <Text style={styles.title}>Consultoria Online</Text>
 
         <FlatList
           data={data}
@@ -148,9 +149,7 @@ export default function Training() {
 
         {DorArticulacao && (
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>
-              Qual dor você sente?
-            </Text>
+            <Text style={styles.label}>Qual dor você sente?</Text>
             <TextInput
               style={styles.input}
               placeholder="Descreva a dor"
