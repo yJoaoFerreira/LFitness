@@ -55,9 +55,11 @@ const Login = ({ navigation, route }) => {
   ];
 
   const renderFormItem = ({ item }) => (
+    
     <View style={styles.inputContainer}>
       <Text style={styles.label}>{item.label}</Text>
       <View style={styles.inputWrapper}>
+       
         <TextInput
           style={styles.formInput}
           placeholder={item.placeholder}
@@ -67,6 +69,7 @@ const Login = ({ navigation, route }) => {
           autoCapitalize="none"
           keyboardType={item.secureTextEntry ? 'default' : 'email-address'}
         />
+      
         {item.isPassword && (
           <TouchableOpacity onPress={toggleSenhaVisivel} style={styles.eyeIcon}>
             <Ionicons name={senhaVisivel ? 'eye-off' : 'eye'} size={24} color="gray" />
@@ -74,6 +77,7 @@ const Login = ({ navigation, route }) => {
         )}
       </View>
     </View>
+   
   );
 
   const handleLogin = () => {
@@ -202,6 +206,24 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 30,
   },
+
+   containerview: {
+    flex: 1,
+    backgroundColor: '#f0f0f0',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  formContainer: {
+    paddingHorizontal: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginBottom: 30,
+  },
   label: {
     paddingVertical: 5,
     fontWeight: '700',
@@ -210,6 +232,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 15,
+    
   },
   inputWrapper: {
     flexDirection: 'row',

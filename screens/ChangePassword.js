@@ -9,22 +9,7 @@ const ChangePassword = ({ navigation }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handlePasswordReset = () => {
-    const auth = getAuth(Firebase);
-    setLoading(true);
-    setError('');
-    setSuccessMessage('');
 
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        setLoading(false);
-        setSuccessMessage('Email de redefinição de senha enviado com sucesso!');
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error.message);
-      });
-  };
 
   return (
     <View style={styles.container}>
