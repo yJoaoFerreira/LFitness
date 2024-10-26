@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: '#333',
+    color: '#333333',
   },
   button: {
     backgroundColor: '#A0BAB7',
@@ -154,10 +154,10 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
   modalContent: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f0f0f0',
     padding: 20,
     marginHorizontal: 30,
     borderRadius: 15,
@@ -167,12 +167,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center',
-    color: '#333',
+    color: '#A0BAB7',
   },
   modalText: {
     fontSize: 18,
     marginBottom: 10,
-    color: '#555',
+    color: '#333333',
   },
   closeButton: {
     backgroundColor: '#7A918E',

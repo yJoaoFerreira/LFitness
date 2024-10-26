@@ -34,6 +34,7 @@ export default function About() {
 const styles = StyleSheet.create({
   containerWrapper: {
     flex: 1,
+    backgroundColor: '#f0f0f0',
   },
   container: {
     alignItems: 'center',
@@ -41,11 +42,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
   },
   title: {
     fontSize: 32,
-    color: '#ffffff',
+    color: '#333333',
     marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -58,14 +58,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 26,
-    color: '#25D366',
+    color: '#A0BAB7',
     marginBottom: 10,
     textAlign: 'center',
     fontStyle: 'italic',
   },
   description: {
     fontSize: 18,
-    color: '#aaaaaa',
+    color: '#333333',
     marginVertical: 10,
     textAlign: 'center',
     paddingHorizontal: 10,

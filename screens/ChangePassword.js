@@ -31,7 +31,7 @@ const ChangePassword = ({ navigation }) => {
       <Image source={require('../assets/logo.png')} style={styles.logo} />
 
       {loading ? (
-        <ActivityIndicator size="large" color="#3498db" />
+        <ActivityIndicator size="large" color="#1a73e8" />
       ) : (
         <>
           <Text style={styles.label}>Digite seu email para trocar a senha:</Text>
@@ -65,32 +65,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#f0f0f0',
   },
   label: {
     paddingVertical: 5,
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#333',
+    color: '#333333',
     marginBottom: 10,
   },
   formInput: {
     height: 40,
-    borderColor: '#ccc',
+    borderColor: '#A0BAB7',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     marginBottom: 15,
   },
   formButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#A0BAB7',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontWeight: '700',
     textTransform: 'uppercase',
   },
@@ -101,10 +101,10 @@ const styles = StyleSheet.create({
   subButtonText: {
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#3498db',
+    color: '#7A918E',
   },
   errorText: {
-    color: 'red',
+    color: '#D0021B',
     marginVertical: 10,
     fontWeight: 'bold',
   },

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useState } from 'react';
 
 const Config = () => {
   const [change1, setchange1] = useState(false);
@@ -36,7 +35,7 @@ const Config = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#f0f0f0',
   },
   content: {
     flex: 1,
@@ -48,12 +47,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: '#ffffff',
+    color: '#333333',
   },
   label: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#aaaaaa',
+    color: '#333333',
     marginTop: 20,
     marginBottom: 10,
   },

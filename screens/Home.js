@@ -46,10 +46,10 @@ const Home = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DEDAD1',
+    backgroundColor: '#f0f0f0',
   },
   content: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -58,13 +58,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: '#4A6865',
+    color: '#333333',
   },
   quoteContainer: {
     marginBottom: 30,
     paddingHorizontal: 20,
     alignItems: 'center',
-    backgroundColor: '#A0BAB7',
     paddingVertical: 10,
     borderRadius: 8,
   },
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },

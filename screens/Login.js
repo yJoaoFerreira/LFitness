@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
+import {
+  View,
+  Pressable,
+  Text,
+  TextInput,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Image,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,8 +30,8 @@ const Login = ({ navigation, route }) => {
       try {
         const storedEmail = await AsyncStorage.getItem('email');
         const storedSenha = await AsyncStorage.getItem('senha');
-        if (storedEmail !== null) setEmail(storedEmail);
-        if (storedSenha !== null) setSenha(storedSenha);
+        if (storedEmail) setEmail(storedEmail);
+        if (storedSenha) setSenha(storedSenha);
       } catch (e) {
         console.log('Erro ao carregar credenciais salvas:', e);
       }
@@ -27,9 +40,7 @@ const Login = ({ navigation, route }) => {
     loadStoredCredentials();
   }, []);
 
-  const toggleSenhaVisivel = () => {
-    setSenhaVisivel(!senhaVisivel);
-  };
+  const toggleSenhaVisivel = () => setSenhaVisivel(!senhaVisivel);
 
   const formData = [
     { label: 'Email:', placeholder: 'Coloque seu E-Mail', value: email, onChange: setEmail, secureTextEntry: false },
@@ -40,7 +51,7 @@ const Login = ({ navigation, route }) => {
       onChange: setSenha, 
       secureTextEntry: !senhaVisivel,
       isPassword: true,
-    }
+    },
   ];
 
   const renderFormItem = ({ item }) => (
@@ -68,56 +79,61 @@ const Login = ({ navigation, route }) => {
   const handleLogin = () => {
     setLoading(true);
     
-    if (email.endsWith('@admin.com')) {
-      if (email === 'leandro@admin.com' && senha === '123456') {
-        console.log('Login realizado com sucesso via sistema local (Admin)!');
-        
-        saveCredentials(email, senha);
-  
-        setTimeout(() => {
-          setLoading(false);
-          route.params.funcLogar(true);
-        }, 2500);
-      } else {
-        setLoading(false);
-        setError('Usuário ou senha incorretos no sistema local (Admin)');
-      }
-  
-    } else if (email.endsWith('@alunos.com')) {
-      if (email === 'fernando@alunos.com' && senha === '123456') {
-        console.log('Login realizado com sucesso via sistema local (Aluno)!');
-  
-        saveCredentials(email, senha);
-  
-        setTimeout(() => {
-          setLoading(false);
-          route.params.funcLogar(true);
-        }, 2500);
-      } else {
-        setLoading(false);
-        setError('Usuário ou senha incorretos no sistema local (Aluno)');
-      }
-  
+    const isAdmin = email.endsWith('@admin.com');
+    const isAluno = email.endsWith('@alunos.com');
+
+    if (isAdmin) {
+      handleAdminLogin();
+    } else if (isAluno) {
+      handleAlunoLogin();
     } else {
-      const auth = getAuth(Firebase);
-      signInWithEmailAndPassword(auth, email, senha)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log('Usuário autenticado via Firebase:', user);
-          
-          saveCredentials(email, senha);
-  
-          setTimeout(() => {
-            setLoading(false);
-            route.params.funcLogar(true);
-          }, 2500);
-        })
-        .catch((error) => {
-          setLoading(false);
-          setError(error.message);
-          console.error('Erro ao logar no Firebase:', error);
-        });
+      handleFirebaseLogin();
     }
+  };
+
+  const handleAdminLogin = () => {
+    if (email === 'leandro@admin.com' && senha === '123456') {
+      console.log('Login realizado com sucesso via sistema local (Admin)!');
+      saveCredentials(email, senha);
+      completeLogin();
+    } else {
+      setLoading(false);
+      setError('Usuário ou senha incorretos no sistema local (Admin)');
+    }
+  };
+
+  const handleAlunoLogin = () => {
+    if (email === 'fernando@alunos.com' && senha === '123456') {
+      console.log('Login realizado com sucesso via sistema local (Aluno)!');
+      saveCredentials(email, senha);
+      completeLogin();
+    } else {
+      setLoading(false);
+      setError('Usuário ou senha incorretos no sistema local (Aluno)');
+    }
+  };
+
+  const handleFirebaseLogin = () => {
+    const auth = getAuth(Firebase);
+    signInWithEmailAndPassword(auth, email, senha)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('Usuário autenticado via Firebase:', user);
+        saveCredentials(email, senha);
+        completeLogin();
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error.message);
+        console.error('Erro ao logar no Firebase:', error);
+      });
+  };
+
+  const completeLogin = () => {
+    setTimeout(() => {
+      setLoading(false);
+      route.params.funcLogar(true);
+    }, 2500);
   };
 
   const saveCredentials = async (email, senha) => {
@@ -137,7 +153,7 @@ const Login = ({ navigation, route }) => {
           <Image source={require('../assets/logo.png')} style={styles.logo} />
 
           {loading ? (
-            <ActivityIndicator size="large" color="#3498db" />
+            <ActivityIndicator size="large" color="#4A90E2" />
           ) : (
             <>
               <FlatList
@@ -146,7 +162,7 @@ const Login = ({ navigation, route }) => {
                 renderItem={renderFormItem}
               />
               
-              {error ? <Text style={styles.errorText}>{error}</Text> : null}
+              {error && <Text style={styles.errorText}>{error}</Text>}
 
               <Pressable style={styles.formButton} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Logar</Text>
@@ -171,7 +187,7 @@ const Login = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f8ff',
+    backgroundColor: '#f0f0f0',
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -190,7 +206,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#0d1f2d',
+    color: '#333333',
   },
   inputContainer: {
     marginBottom: 15,
@@ -202,24 +218,24 @@ const styles = StyleSheet.create({
   formInput: {
     flex: 1,
     height: 40,
-    borderColor: '#ccc',
+    borderColor: '#A0BAB7',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
   },
   eyeIcon: {
     marginLeft: 10,
   },
   formButton: {
-    backgroundColor: '#1a73e8',
+    backgroundColor: '#A0BAB7',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontWeight: '700',
     textTransform: 'uppercase',
   },
@@ -229,15 +245,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   subButton: {
-    padding: 10,
+    alignItems: 'center',
   },
   subButtonText: {
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#1a73e8',
+    color: '#7A918E',
   },
   errorText: {
-    color: '#d9534f',
+    color: '#D0021B',
     marginVertical: 10,
     fontWeight: 'bold',
   },

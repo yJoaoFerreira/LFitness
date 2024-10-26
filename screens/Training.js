@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f0f0',
   },
   scrollViewContent: {
     paddingBottom: 20,
@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    color: '#333333',
   },
   inputContainer: {
     marginBottom: 15,
@@ -213,13 +214,15 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 5,
+    color: '#333333',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#A0BAB7',
     borderRadius: 5,
     padding: 10,
     fontSize: 16,
+    backgroundColor: '#ffffff',
   },
   switchContainer: {
     flexDirection: 'row',
@@ -229,6 +232,7 @@ const styles = StyleSheet.create({
   },
   switchLabel: {
     fontSize: 16,
+    color: '#333333',
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -236,7 +240,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#25D366',
+    backgroundColor: '#A0BAB7',
     padding: 15,
     borderRadius: 5,
     flexDirection: 'row',
@@ -244,7 +248,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 16,
     marginLeft: 10,
   },

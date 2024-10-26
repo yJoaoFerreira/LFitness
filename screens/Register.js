@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#f0f0f0',
   },
   label: {
     paddingVertical: 5,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   formInput: {
     height: 40,
-    borderColor: '#CCCCCC',
+    borderColor: '#A0BAB7',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   formButton: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#A0BAB7',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   subButtonText: {
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#4A90E2',
+    color: '#7A918E',
   },
   logo: {
     width: 150,
