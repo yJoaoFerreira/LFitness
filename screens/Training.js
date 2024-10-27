@@ -117,7 +117,6 @@ export default function Training() {
           <TextInput
             style={styles.input}
             placeholder={item.placeholder}
-            keyboardType="numeric"
             value={item.value}
             onChangeText={item.onChangeText}
             placeholderTextColor="#888"
