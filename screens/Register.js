@@ -5,6 +5,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from '../services/firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ const Register = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState('');
   const [image, setImage] = useState('');
 
   const handleRegister = async () => {
