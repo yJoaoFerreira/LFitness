@@ -117,7 +117,6 @@ export default function Training() {
           <TextInput
             style={styles.input}
             placeholder={item.placeholder}
-            keyboardType="numeric"
             value={item.value}
             onChangeText={item.onChangeText}
             placeholderTextColor="#888"
@@ -185,7 +184,7 @@ export default function Training() {
 
         <TouchableOpacity style={styles.button} onPress={handleSaveAndSendMessage}>
           <Icon name="save" size={20} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>Salvar Dados e Enviar WhatsApp</Text>
+          <Text style={styles.buttonText}>Enviar os Dados</Text>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -235,7 +234,6 @@ const styles = StyleSheet.create({
     color: '#333333',
   },
   checkboxContainer: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
   },
