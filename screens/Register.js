@@ -25,6 +25,10 @@ const Register = ({ navigation }) => {
       setError('O campo nome é obrigatório.');
       return;
     }
+    if (senha.length < 6) {
+      setError('A senha deve ter no mínimo 6 caracteres.');
+      return;
+    }
     setLoading(true);
     try {
       const auth = getAuth();
@@ -77,6 +81,9 @@ const Register = ({ navigation }) => {
               <Text style={styles.label}>Senha:</Text>
               <TextInput style={styles.formInput} placeholder="Digite sua Senha" value={senha} onChangeText={setSenha} secureTextEntry={true} />
 
+              {/* Aviso de senha mínima */}
+              <Text style={styles.passwordHint}>A senha deve ter no mínimo 6 caracteres.</Text>
+
               <Text style={styles.label}>Confirmar Senha:</Text>
               <TextInput style={styles.formInput} placeholder="Confirme sua Senha" value={confirmarSenha} onChangeText={setConfirmarSenha} secureTextEntry={true} />
 
@@ -119,6 +126,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
     marginBottom: 15,
+  },
+  passwordHint: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 10,
   },
   formButton: {
     backgroundColor: '#A0BAB7',

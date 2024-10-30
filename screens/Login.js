@@ -55,11 +55,9 @@ const Login = ({ navigation, route }) => {
   ];
 
   const renderFormItem = ({ item }) => (
-    
     <View style={styles.inputContainer}>
       <Text style={styles.label}>{item.label}</Text>
       <View style={styles.inputWrapper}>
-       
         <TextInput
           style={styles.formInput}
           placeholder={item.placeholder}
@@ -68,8 +66,8 @@ const Login = ({ navigation, route }) => {
           onChangeText={item.onChange}
           autoCapitalize="none"
           keyboardType={item.secureTextEntry ? 'default' : 'email-address'}
+          key={item.isPassword ? (senhaVisivel ? 'text' : 'password') : undefined} // Adiciona uma key dinâmica
         />
-      
         {item.isPassword && (
           <TouchableOpacity onPress={toggleSenhaVisivel} style={styles.eyeIcon}>
             <Ionicons name={senhaVisivel ? 'eye-off' : 'eye'} size={24} color="gray" />
@@ -77,7 +75,6 @@ const Login = ({ navigation, route }) => {
         )}
       </View>
     </View>
-   
   );
 
   const handleLogin = () => {
