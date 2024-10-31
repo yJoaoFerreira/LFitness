@@ -66,7 +66,7 @@ const Login = ({ navigation, route }) => {
           onChangeText={item.onChange}
           autoCapitalize="none"
           keyboardType={item.secureTextEntry ? 'default' : 'email-address'}
-          key={item.isPassword ? (senhaVisivel ? 'text' : 'password') : undefined} // Adiciona uma key dinâmica
+          key={item.isPassword ? (senhaVisivel ? 'text' : 'password') : undefined}
         />
         {item.isPassword && (
           <TouchableOpacity onPress={toggleSenhaVisivel} style={styles.eyeIcon}>
@@ -151,12 +151,12 @@ const Login = ({ navigation, route }) => {
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : null}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.formContainer}>
-          <Image source={require('../assets/logo.png')} style={styles.logo} />
-
           {loading ? (
             <ActivityIndicator size="large" color="#4A90E2" />
           ) : (
             <>
+              <Image source={require('../assets/logo.png')} style={styles.logo} />
+              
               <FlatList
                 data={formData}
                 keyExtractor={(item) => item.label}
@@ -203,24 +203,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 30,
   },
-
-   containerview: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  formContainer: {
-    paddingHorizontal: 20,
-  },
-  logo: {
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
-    marginBottom: 30,
-  },
   label: {
     paddingVertical: 5,
     fontWeight: '700',
@@ -229,7 +211,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 15,
-    
   },
   inputWrapper: {
     flexDirection: 'row',

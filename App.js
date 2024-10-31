@@ -13,6 +13,7 @@ import Student from './screens/Student';
 import Home from './screens/Home';
 import Header from './components/Header';
 import Loading from './components/Loading';
+import Intro from './components/Intro';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -125,6 +126,7 @@ const DrawerNav = ({ funcLogar }) => (
 const App = () => {
   const [estaLogado, setLogado] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(true); // Novo estado para a tela de introdução
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -144,22 +146,33 @@ const App = () => {
         <DrawerNav funcLogar={setLogado} />
       ) : (
         <Stack.Navigator>
-          <Stack.Screen 
-            name="Login" 
-            component={Login} 
-            initialParams={{ funcLogar: setLogado }} 
-            options={{ headerShown: false }}  
-          />
-          <Stack.Screen 
-            name="Registrar" 
-            component={Register} 
-            options={{ headerShown: false }}  
-          />
-          <Stack.Screen 
-            name="TrocarSenha" 
-            component={ChangePassword} 
-            options={{ headerShown: false }}  
-          />
+          {showIntro ? (
+            <Stack.Screen
+              name="Intro"
+              options={{ headerShown: false }}
+            >
+              {(props) => <Intro {...props} onContinue={() => setShowIntro(false)} />}
+            </Stack.Screen>
+          ) : (
+            <>
+              <Stack.Screen 
+                name="Login" 
+                component={Login} 
+                initialParams={{ funcLogar: setLogado }} 
+                options={{ headerShown: false }}  
+              />
+              <Stack.Screen 
+                name="Registrar" 
+                component={Register} 
+                options={{ headerShown: false }}  
+              />
+              <Stack.Screen 
+                name="TrocarSenha" 
+                component={ChangePassword} 
+                options={{ headerShown: false }}  
+              />
+            </>
+          )}
         </Stack.Navigator>
       )}
     </NavigationContainer>
