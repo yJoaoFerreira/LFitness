@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { View, Pressable, Text, TextInput, StyleSheet, ActivityIndicator, Image, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from '../services/firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
 
 const Register = ({ navigation }) => {
