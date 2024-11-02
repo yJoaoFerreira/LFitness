@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth } from 'firebase/auth';
@@ -18,7 +18,8 @@ const Student = () => {
     Hipertenso: false,
     Restricao: '',
     PreferenciaTreino: '',
-    Link: ''
+    Link: '',
+    Foto: ''
   });
 
   useEffect(() => {
@@ -43,7 +44,8 @@ const Student = () => {
               Hipertenso: data.Hipertenso || false,
               Restricao: data.Restricao || 'N/A',
               PreferenciaTreino: data.PreferenciaTreino || 'N/A',
-              Link: data.Link || ''
+              Link: data.Link || '',
+              Foto: data.Foto || ''
             });
           } else {
             console.log('Documento não encontrado.');
@@ -81,6 +83,15 @@ const Student = () => {
         </TouchableOpacity>
       </View>
       <Text style={styles.title}>Área do Aluno</Text>
+
+      {alunoData.Foto ? (
+        <Image
+          source={{ uri: `data:image/jpeg;base64,${alunoData.Foto}` }}
+          style={styles.profileImage}
+        />
+      ) : (
+        <Text style={styles.noImageText}>Imagem de perfil não disponível</Text>
+      )}
 
       <TouchableOpacity style={styles.button} onPress={openPhysicalAssessment}>
         <Text style={styles.buttonText}>Ver Avaliação Física</Text>
@@ -133,6 +144,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
     color: '#333333',
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  noImageText: {
+    textAlign: 'center',
+    color: '#888888',
+    marginBottom: 20,
   },
   button: {
     backgroundColor: '#A0BAB7',
