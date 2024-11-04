@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Image, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth } from 'firebase/auth';
@@ -9,6 +9,7 @@ import { db } from '../services/firebaseConfig';
 const Student = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [alunoData, setAlunoData] = useState({
     Nome: '',
     Peso: '',
@@ -53,6 +54,8 @@ const Student = () => {
         }
       } catch (error) {
         console.error('Erro ao buscar dados de avaliação:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -82,51 +85,58 @@ const Student = () => {
           <Ionicons name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.title}>Área do Aluno</Text>
 
-      {alunoData.Foto ? (
-        <Image
-          source={{ uri: `data:image/jpeg;base64,${alunoData.Foto}` }}
-          style={styles.profileImage}
-        />
+      {loading ? (
+        <ActivityIndicator size="large" color="#4A90E2" />
       ) : (
-        <Text style={styles.noImageText}>Imagem de perfil não disponível</Text>
+        <>
+          {alunoData.Foto ? (
+            <Image
+              source={{ uri: `data:image/jpeg;base64,${alunoData.Foto}` }}
+              style={styles.profileImage}
+            />
+          ) : (
+            <Text style={styles.noImageText}>Imagem de perfil não disponível</Text>
+          )}
+
+          <Text style={styles.title}>Área do Aluno</Text>
+
+          <TouchableOpacity style={styles.button} onPress={openPhysicalAssessment}>
+            <Text style={styles.buttonText}>Ver Avaliação Física</Text>
+          </TouchableOpacity>
+
+          <Modal
+            visible={modalVisible}
+            animationType="slide"
+            transparent={true}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Avaliação Física</Text>
+                <Text style={styles.modalText}>Nome: {alunoData.Nome}</Text>
+                <Text style={styles.modalText}>Peso: {alunoData.Peso} kg</Text>
+                <Text style={styles.modalText}>Altura: {alunoData.Altura} cm</Text>
+                <Text style={styles.modalText}>Dor Articular: {alunoData.DorArticulacao ? 'Sim' : 'Não'}</Text>
+                {alunoData.DorArticulacao && (
+                  <Text style={styles.modalText}>Tipo de Dor: {alunoData.TipoDor}</Text>
+                )}
+                <Text style={styles.modalText}>Hipertenso: {alunoData.Hipertenso ? 'Sim' : 'Não'}</Text>
+                <Text style={styles.modalText}>Restrições: {alunoData.Restricao}</Text>
+                <Text style={styles.modalText}>Preferência de Treino: {alunoData.PreferenciaTreino}</Text>
+
+                <TouchableOpacity style={styles.linkButton} onPress={handleOpenLink}>
+                  <Text style={styles.buttonText}>Ver Exercícios</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+                  <Text style={styles.buttonText}>Fechar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </>
       )}
-
-      <TouchableOpacity style={styles.button} onPress={openPhysicalAssessment}>
-        <Text style={styles.buttonText}>Ver Avaliação Física</Text>
-      </TouchableOpacity>
-
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Avaliação Física</Text>
-            <Text style={styles.modalText}>Nome: {alunoData.Nome}</Text>
-            <Text style={styles.modalText}>Peso: {alunoData.Peso} kg</Text>
-            <Text style={styles.modalText}>Altura: {alunoData.Altura} cm</Text>
-            <Text style={styles.modalText}>Dor Articular: {alunoData.DorArticulacao ? 'Sim' : 'Não'}</Text>
-            {alunoData.DorArticulacao && (
-              <Text style={styles.modalText}>Tipo de Dor: {alunoData.TipoDor}</Text>
-            )}
-            <Text style={styles.modalText}>Hipertenso: {alunoData.Hipertenso ? 'Sim' : 'Não'}</Text>
-            <Text style={styles.modalText}>Restrições: {alunoData.Restricao}</Text>
-            <Text style={styles.modalText}>Preferência de Treino: {alunoData.PreferenciaTreino}</Text>
-
-            <TouchableOpacity style={styles.linkButton} onPress={handleOpenLink}>
-              <Text style={styles.buttonText}>Ver Exercícios</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
-              <Text style={styles.buttonText}>Fechar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };

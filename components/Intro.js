@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 
 const Intro = ({ navigation, onContinue }) => {
-  const [displayedText, setDisplayedText] = useState(''); // Estado para o texto exibido
-  const [isButtonVisible, setButtonVisible] = useState(false); // Estado para controle de visibilidade do botão
+  const [displayedText, setDisplayedText] = useState('');
+  const [isButtonVisible, setButtonVisible] = useState(false);
   const fullText = `Oi, eu sou o Leandro!
   
 Seja muito bem-vindo à LFitness!
@@ -18,10 +18,9 @@ Vamos juntos nessa jornada!`;
 
   useEffect(() => {
     let index = 0;
-    const typingInterval = 25; // Tempo de intervalo para cada caractere
+    const typingInterval = 25;
     const maxLength = fullText.length;
 
-    // Inicia a animação de fade após um pequeno delay
     const fadeIn = () => {
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -30,31 +29,30 @@ Vamos juntos nessa jornada!`;
       }).start();
     };
 
-    // Função para incrementar o texto
     const typeText = () => {
       if (index < maxLength) {
-        setDisplayedText(fullText.slice(0, index + 1)); // Exibe o texto até o índice atual
+        setDisplayedText(fullText.slice(0, index + 1));
         index++;
       } else {
-        clearInterval(intervalId); // Limpa o intervalo quando termina
-        setButtonVisible(true); // Torna o botão visível após a animação de digitação
+        clearInterval(intervalId);
+        setButtonVisible(true);
       }
     };
 
-    const intervalId = setInterval(typeText, typingInterval); // Usa setInterval para chamar typeText
-    fadeIn(); // Inicia a animação de fade
+    const intervalId = setInterval(typeText, typingInterval);
+    fadeIn();
 
     return () => {
-      clearInterval(intervalId); // Limpa o intervalo ao desmontar
+      clearInterval(intervalId);
     };
-  }, [fadeAnim, fullText]); // Dependências do useEffect
+  }, [fadeAnim, fullText]);
 
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.textContainer, { opacity: fadeAnim }]}>
         <Text style={styles.introText}>{displayedText}</Text>
       </Animated.View>
-      {isButtonVisible && ( // Renderiza o botão somente se isButtonVisible for verdadeiro
+      {isButtonVisible && (
         <TouchableOpacity
           style={styles.button}
           onPress={() => {

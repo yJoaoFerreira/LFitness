@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import {
-  Text, View, StyleSheet, TouchableOpacity, TextInput, Switch, Linking,
-  FlatList, KeyboardAvoidingView, Platform, ScrollView
+  Text, 
+  View, 
+  StyleSheet, 
+  TouchableOpacity, 
+  TextInput, 
+  Switch, 
+  Linking,
+  FlatList, 
+  KeyboardAvoidingView, 
+  Platform, 
+  ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
@@ -21,7 +30,7 @@ export default function Training() {
 
   const auth = getAuth();
   const user = auth.currentUser;
-  const whatsappNumber = '5521993507026';
+  const whatsappNumber = '5521993507026'; // Telefone do Lucas
 
   const handleSaveToFirestore = async () => {
     if (!user) {
