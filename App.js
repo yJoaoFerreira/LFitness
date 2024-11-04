@@ -126,7 +126,7 @@ const DrawerNav = ({ funcLogar }) => (
 const App = () => {
   const [estaLogado, setLogado] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showIntro, setShowIntro] = useState(true); // Novo estado para a tela de introdução
+  const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
