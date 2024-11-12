@@ -30,7 +30,7 @@ export default function Training() {
 
   const auth = getAuth();
   const user = auth.currentUser;
-  const whatsappNumber = '5521993507026'; // Telefone do Lucas
+  const whatsappNumber = '';
 
   const handleSaveToFirestore = async () => {
     if (!user) {
