@@ -1,7 +1,7 @@
-# App LFitness
+# LFitness
 
 ## Descrição
-Um aplicativo para Personal Trainers desenvolvido na disciplina de "Desenvolvimento Mobile em React-Native" do curso de Análise e Desenvolvimento de Sistemas (ADS).
+Um aplicativo para Leandro, um Personal Trainer. Desenvolvido na disciplina de "Desenvolvimento Mobile em React-Native" do curso de Análise e Desenvolvimento de Sistemas (ADS).
 
 - **Professor:** Lucas Floriano
 - **Linguagem:** React Native
